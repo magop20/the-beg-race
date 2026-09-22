@@ -175,16 +175,18 @@ a.bd:hover{background:var(--acid)}
 .item img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#fff;display:block}
 .item figcaption{padding:12px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
 .item figcaption span{color:var(--muted);font-size:13px}.item figcaption i{font-style:normal;font-weight:800;margin-top:auto;padding-top:10px;font-size:16px}
-.promos{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:var(--s2);margin-bottom:10px}
+.promos{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px;margin-bottom:10px}
 .promo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.promo code{font-family:var(--display);font-size:17px;background:#000;color:var(--acid);padding:4px 8px;border-radius:4px;user-select:all}
-.promo span{color:var(--muted);font-size:14px;flex:1 1 200px}
+.promo code{font-family:var(--display);font-size:15px;background:#000;color:var(--acid);padding:4px 8px;border-radius:4px;user-select:all}
+.promo span{color:var(--muted);font-size:13px;flex:1 1 160px}
 #p-shop a{color:var(--green);font-weight:700;padding-block:6px;display:inline-block}
 @media(max-width:640px){
-  .stats{grid-template-columns:1fr 1fr;gap:6px}
-  .stat{padding:10px 12px;display:grid;grid-template-rows:30px auto auto}
+  .stats{grid-template-columns:repeat(3,1fr);gap:6px}
+  .stat{padding:8px 9px;display:grid;grid-template-rows:28px auto auto}
+  .stat b{font-size:18px;letter-spacing:-.02em}
+  .stat small{font-size:11px}
   .stat span{font-size:10px;line-height:1.2;align-self:start}
-  .stat b{font-size:22px}
+
   .stat.hot{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:baseline}
   .stat.hot span{grid-column:1/-1}
   .stat.hot b{font-size:30px;white-space:nowrap}
@@ -290,7 +292,7 @@ body.poster .posterbar{display:flex}
         <div class="grid" id="grid"></div>
       </div>
     </div>
-    <div class="legend">
+    <div class="legend"><span><b>|</b> вертикальная линия это график: где нужно быть сегодня по календарю</span>
       <span><i style="background:linear-gradient(90deg,#ff5ca8,#8a4fe0,#ff9a3c,#3aa0ff)"></i>у каждого свой цвет и своего зверя</span>
       <span>👑 и «ГОТОВО!» значат, что дистанция закрыта</span>
       <span class="hint">Нажми на строку, чтобы открыть карточку участника</span>
