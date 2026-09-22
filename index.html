@@ -73,6 +73,11 @@ button,input{font:inherit;color:inherit}
 .boardtitle b{font-family:var(--display);font-weight:400;font-size:clamp(24px,4.5vw,40px);color:var(--ink);line-height:1;display:block;text-shadow:0 2px 0 #fff,0 0 12px #fff,0 0 12px #fff}
 .boardtitle span{font-weight:800;color:var(--ink);opacity:.72;text-transform:uppercase;letter-spacing:.08em;font-size:12px}
 .lane.done .fill{background:var(--acid)!important;box-shadow:inset 0 0 0 2px var(--ink)}
+.lanes{--pace:0%}
+.lane .track::after{content:"";position:absolute;top:-4px;bottom:-4px;left:var(--pace);width:2px;background:var(--ink);opacity:.35;z-index:1}
+.lane.done .track::after{display:none}
+.lane.behind .num.left{color:var(--red);font-weight:800}
+.lhead .pacemark{position:absolute;left:var(--pace);transform:translateX(-50%);background:var(--acid);color:var(--ink);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border-radius:3px;white-space:nowrap}
 .lane.done .post{display:none}
 .lanes{background:rgba(255,255,255,.92);margin:0 12px 12px;border-radius:12px;padding:8px 8px 10px;position:relative}
 .lhead{display:grid;grid-template-columns:30px minmax(96px,160px) 1fr 74px 74px 50px;gap:10px;padding:6px 8px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);align-items:end}
@@ -263,8 +268,8 @@ body.poster .posterbar{display:flex}
         <div class="boardtitle"><b id="btitle">78 челлендж</b><span>Одна команда, у каждого своя цель</span></div>
         <div class="sign">Сегодня ближе,<br>чем вчера</div>
       </div>
-      <div class="lanes">
-        <div class="lhead"><span></span><span>Участник</span><span class="fin">ФИНИШ</span><span style="text-align:right">Пройдено</span><span style="text-align:right">Осталось</span><span style="text-align:right">%</span></div>
+      <div class="lanes" id="lanes">
+        <div class="lhead" style="position:relative"><span></span><span>Участник</span><span class="track" style="position:relative"><span class="pacemark">график</span></span><span class="fin">ФИНИШ</span><span style="text-align:right">Пройдено</span><span style="text-align:right">Осталось</span><span style="text-align:right">%</span></div>
         <div class="grid" id="grid"></div>
       </div>
     </div>
@@ -379,6 +384,7 @@ try{me=localStorage.getItem("beg_me")||""}catch(e){}
 const $=id=>document.getElementById(id);
 const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSefJ1R_ZsYerzJyceANHhz01OFOAgiDYJKGtJTkTCnQ1-WRoQ/viewform";
 const fmt=(x,d=1)=>x==null?"-":x.toLocaleString("ru-RU",{minimumFractionDigits:0,maximumFractionDigits:d});
+const paceNow=()=>{const all=SEASON.end-SEASON.start,gone=Date.now()-SEASON.start;return Math.max(0,Math.min(1,gone/all))};
 const daysLeft=()=>{const now=new Date(),ms=SEASON.end-now;return Math.max(0,Math.ceil(ms/864e5))};
 let loadedAt=null;
 function setSource(){const s=$("src");s.classList.toggle("live",live);
@@ -416,9 +422,12 @@ function race(){
   const g=$("grid");
   if(!shown.length){g.innerHTML='<div class="empty">Никого не нашли. Проверь, как тебя записали в таблице Макса.</div>';return}
   const medal=p=>(filter=="all"&&!q&&p<=3)?["🥇","🥈","🥉"][p-1]:p;
+  const pace=paceNow();
+  $("lanes").style.setProperty("--pace",(pace*100).toFixed(1)+"%");
   g.innerHTML=shown.map(r=>{
     const p=Math.min(1,r.total/r.need), done=r.total>=r.need, left=Math.max(0,r.need-r.total), pc=(p*100).toFixed(1);
-    const cls=["lane",done?"done":"",(me&&(r.id||r.name)==me)?"me":""].join(" ");
+    const behind=!done&&r.total/r.need<pace-0.04;
+    const cls=["lane",done?"done":"",behind?"behind":"",(me&&(r.id||r.name)==me)?"me":""].join(" ");
     return `<button class="${cls}" data-n="${esc(r.id||r.name)}">
       <span class="pos">${medal(r.pos)}</span>
       <span class="who"><b>${esc(dn(r))}</b>${tagOf(r)}</span>
