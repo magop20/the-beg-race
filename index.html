@@ -478,7 +478,7 @@ function openCard(id){
    <div class="weeks">${r.weeks.map((w,i)=>`<div class="wk"><b>${w?fmt(w):"0"}</b><i style="height:${w/mx*60}px"></i><span>${esc(DATA.weekLabels[i]||"")}</span></div>`).join("")}</div>
    ${r.pay!=null?`<div class="kv"><div style="grid-column:1/-1"><b>${fmt(r.pay,0)} ₽</b><span>накоплено в банке на сегодня</span></div></div>`:""}
    ${pr&&["5","10","21","42"].some(k=>pr[k])?`<div class="kv">${["5","10","21","42"].map(k=>`<div><b style="font-size:15px">${pr[k]?tfmt(pr[k]):"-"}</b><span>${DL[k]}</span></div>`).join("")}</div>`:""}
-   <a class="ghost" href="${FORM_URL}" target="_blank" rel="noopener">Заполнить анкету участника</a>
+   <a class="ghost" href="${esc(r.form||FORM_URL)}" target="_blank" rel="noopener">${r.form?"Заполнить анкету: твои данные уже вписаны":"Заполнить анкету участника"}</a>
    <button class="ghost" id="setme">${me==(r.id||r.name)?"Это я ✓":"Это я, подсветить мою строку"}</button>`;
   $("setme").onclick=()=>{me=r.id||r.name;try{localStorage.setItem("beg_me",me)}catch(e){}race();prRender();$("dlg").close();
     const row=document.querySelector(".lane.me");if(row)row.scrollIntoView({block:"center",behavior:"smooth"})};
@@ -582,6 +582,7 @@ renderAll();
         const ph=String(r[9]||"").trim();if(/^img\/ava\/[a-z0-9]+\.jpg$/i.test(ph))x.photo=ph;
         
         const bd=String(r[11]||"").trim();if(/^\d{1,2}\.\d{1,2}$/.test(bd))x.bd=bd;
+        const fl=String(r[10]||"").trim();if(/^https:\/\/docs\.google\.com\/forms\//.test(fl))x.form=fl;
         const un=String(r[12]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_]{4,32}$/.test(un))x.tg=un;
         const ig=String(r[13]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_.]{2,30}$/.test(ig))x.ig=ig});
       renderAll();
