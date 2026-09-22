@@ -16,7 +16,7 @@
   color-scheme:light;
 }
 body{background:var(--ground);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.45}
-.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
 *{box-sizing:border-box}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px var(--acid-soft)}
@@ -77,16 +77,18 @@ button,input{font:inherit;color:inherit}
 .lane .track::after{content:"";position:absolute;top:-4px;bottom:-4px;left:var(--pace);width:2px;background:var(--ink);opacity:.35;z-index:1}
 .lane.done .track::after{display:none}
 .lane.behind .num.left{color:var(--red);font-weight:800}
-.lhead .pacemark{position:absolute;left:var(--pace);transform:translateX(-50%);background:var(--acid);color:var(--ink);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border-radius:3px;white-space:nowrap}
+.headtrack{position:relative;display:block}
+.headtrack .fin{position:absolute;right:0;bottom:0}
+.lhead .pacemark{position:absolute;left:var(--pace);transform:translateX(-50%);bottom:0;background:var(--acid);color:var(--ink);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border-radius:3px;white-space:nowrap}
 .lane.done .post{display:none}
 .lanes{background:rgba(255,255,255,.92);margin:0 12px 12px;border-radius:12px;padding:8px 8px 10px;position:relative}
-.lhead{display:grid;grid-template-columns:30px minmax(96px,160px) 1fr 74px 74px 50px;gap:10px;padding:6px 8px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);align-items:end}
+.lhead{position:sticky;top:0;z-index:3;background:rgba(255,255,255,.96);backdrop-filter:blur(4px);display:grid;grid-template-columns:30px minmax(96px,1.1fr) minmax(150px,2.4fr) 78px 78px 50px;gap:10px;padding:6px 8px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);align-items:end}
 .lhead .fin{justify-self:end;background:var(--ink);color:var(--acid);font-family:var(--display);font-weight:400;font-size:12px;letter-spacing:.06em;padding:5px 10px;border-radius:4px;box-shadow:2px 2px 0 rgba(0,0,0,.25);transform:translateY(-2px)}
 .legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin:10px 4px 0}
 .legend span{display:flex;align-items:center;gap:6px}
 .legend i{width:18px;height:8px;border-radius:4px;display:inline-block}
 .grid{display:flex;flex-direction:column;gap:2px}
-.lane{display:grid;grid-template-columns:30px minmax(96px,160px) 1fr 74px 74px 50px;gap:10px;align-items:center;padding:7px 8px;border-radius:10px;cursor:pointer;border:1px solid transparent;background:none;text-align:left;width:100%;color:var(--text)}
+.lane{display:grid;grid-template-columns:30px minmax(96px,1.1fr) minmax(150px,2.4fr) 78px 78px 50px;gap:10px;align-items:center;padding:7px 8px;border-radius:10px;cursor:pointer;border:1px solid transparent;background:none;text-align:left;width:100%;color:var(--text)}
 .lane:hover{background:var(--acid-soft);box-shadow:inset 4px 0 0 var(--ink)}
 .lane:nth-child(even){background:#F7FAF4}
 .lane:nth-child(even):hover{background:var(--acid-soft)}
@@ -103,7 +105,7 @@ button,input{font:inherit;color:inherit}
 .trail{position:absolute;top:50%;right:0;border-top:2px dashed #b9c0b3;transform:translateY(-1px)}
 .ava{position:absolute;z-index:2;top:50%;transform:translate(-55%,-58%);font-size:24px;line-height:1;filter:drop-shadow(0 2px 1px rgba(0,0,0,.25));transition:left .8s cubic-bezier(.2,.7,.2,1)}
 .crown{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:12px}
-.post{position:absolute;z-index:0;right:-4px;top:1px;bottom:1px;width:6px;background:repeating-linear-gradient(#111 0 5px,#fff 5px 10px);border-radius:2px}
+.post{position:absolute;z-index:0;right:0;top:1px;bottom:1px;width:6px;background:repeating-linear-gradient(#111 0 5px,#fff 5px 10px);border-radius:2px}
 .num{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
 .num.left{color:var(--red)}
 .num.pct{color:var(--muted);font-size:13px}
@@ -130,6 +132,7 @@ button,input{font:inherit;color:inherit}
 .pd small{color:var(--muted);position:relative}
 @media (max-width:560px){.podium{grid-template-columns:1fr}}
 .tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+@media(max-width:440px){.tbl{font-size:13px}.tbl td,.tbl th{padding:7px 6px}}
 .tbl th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:700}
 .tbl td{padding:9px 10px;border-bottom:1px solid var(--line)}
 .tbl tbody tr:nth-child(even) td{background:#F7FAF4}
@@ -150,7 +153,7 @@ button,input{font:inherit;color:inherit}
 .rule h3::before{content:counter(r,decimal-leading-zero);font-size:13px;color:var(--green);letter-spacing:0;font-family:var(--display)}
 .db .ghost{display:block;text-align:center;text-decoration:none;margin-bottom:8px;padding:12px;border-width:2px}
 .db #setme{background:var(--acid);border-color:var(--ink);color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
-.bdays{background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bdays{min-height:44px;background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .bdays b{font-family:var(--display);font-weight:400;font-size:15px;margin-right:4px}
 .bd{background:var(--surface2);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--text);text-decoration:none;display:inline-block}
 a.bd:hover{background:var(--acid)}
@@ -212,14 +215,15 @@ a.bd:hover{background:var(--acid)}
 dialog{background:var(--surface);color:var(--text);border:2px solid var(--ink);box-shadow:8px 8px 0 var(--ink);border-radius:14px;padding:0;width:min(440px,calc(100% - 32px))}
 dialog::backdrop{background:rgba(9,12,9,.58)}
 .dh{padding:18px 18px 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}.dh>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.dh h2{line-height:1.15}
+.dh h2{line-height:1.15;font-size:clamp(17px,5vw,24px);overflow-wrap:anywhere}
 .dh h2{margin:0;font-family:var(--display);font-weight:400;font-size:24px;line-height:1.1}
-.dx{background:none;border:0;font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
+.dx{background:none;border:0;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.dx:hover{background:var(--surface2);color:var(--text)}
 .db{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px}
 .kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .kv div{background:var(--surface2);border-radius:8px;padding:9px}
-.kv b{display:block;font-family:var(--display);font-weight:400;font-size:19px;font-variant-numeric:tabular-nums}
-.kv span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.kv b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(15px,4.5vw,19px);font-variant-numeric:tabular-nums}
+.kv span{font-size:11px;white-space:nowrap;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
 .weeks{display:flex;gap:6px;align-items:flex-end;height:90px}
 .wk{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end;height:100%}
 .wk i{display:block;width:100%;background:var(--green);border-radius:3px 3px 0 0;min-height:2px}
@@ -275,7 +279,7 @@ body.poster .posterbar{display:flex}
         <div class="sign">Сегодня ближе,<br>чем вчера</div>
       </div>
       <div class="lanes" id="lanes">
-        <div class="lhead" style="position:relative"><span></span><span>Участник</span><span class="track" style="position:relative"><span class="pacemark">график</span></span><span class="fin">ФИНИШ</span><span style="text-align:right">Пройдено</span><span style="text-align:right">Осталось</span><span style="text-align:right">%</span></div>
+        <div class="lhead"><span></span><span>Участник</span><span class="headtrack"><span class="pacemark">график</span><span class="fin">ФИНИШ</span></span><span style="text-align:right">Пройдено</span><span style="text-align:right">Осталось</span><span style="text-align:right">%</span></div>
         <div class="grid" id="grid"></div>
       </div>
     </div>
@@ -464,9 +468,9 @@ function openCard(id){
   $("dbody").innerHTML=`
    <div class="kv"><div><b>${fmt(r.total)}</b><span>пройдено</span></div><div><b>${r.need}</b><span>цель, км</span></div><div><b>${left?fmt(left,2)+" км":"✓"}</b><span>осталось</span></div></div>
    <div class="msg">${left?`Чтобы закрыть дистанцию, нужно ${d?`${fmt(perDay,2)} км в день следующие ${d} ${plural(d,"день","дня","дней")}`:`${fmt(perDay,2)} км сегодня`}.`:`Дистанция закрыта${r.total>r.need?`, сверху ещё ${fmt(r.total-r.need)} км`:""}. Пробежки всё равно скидываем.`}</div>
-   <div class="weeks">${r.weeks.map((w,i)=>`<div class="wk"><b>${w?fmt(w):"-"}</b><i style="height:${w/mx*60}px"></i><span>${esc(DATA.weekLabels[i]||"")}</span></div>`).join("")}</div>
+   <div class="weeks">${r.weeks.map((w,i)=>`<div class="wk"><b>${w?fmt(w):"0"}</b><i style="height:${w/mx*60}px"></i><span>${esc(DATA.weekLabels[i]||"")}</span></div>`).join("")}</div>
    ${r.pay!=null?`<div class="kv"><div style="grid-column:1/-1"><b>${fmt(r.pay,0)} ₽</b><span>накоплено в банке на сегодня</span></div></div>`:""}
-   ${pr?`<div class="kv">${["5","10","21","42"].map(k=>`<div><b style="font-size:15px">${pr[k]?tfmt(pr[k]):"-"}</b><span>${DL[k]}</span></div>`).join("")}</div>`:""}
+   ${pr&&["5","10","21","42"].some(k=>pr[k])?`<div class="kv">${["5","10","21","42"].map(k=>`<div><b style="font-size:15px">${pr[k]?tfmt(pr[k]):"-"}</b><span>${DL[k]}</span></div>`).join("")}</div>`:""}
    <a class="ghost" href="${FORM_URL}" target="_blank" rel="noopener">Заполнить анкету участника</a>
    <button class="ghost" id="setme">${me==(r.id||r.name)?"Это я ✓":"Это я, подсветить мою строку"}</button>`;
   $("setme").onclick=()=>{me=r.id||r.name;try{localStorage.setItem("beg_me",me)}catch(e){}race();prRender();$("setme").textContent="Это я ✓"};
