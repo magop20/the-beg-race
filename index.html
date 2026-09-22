@@ -424,7 +424,7 @@ function stats(){
 }
 function plural(n,a,b,c){n=Math.abs(n)%100;const m=n%10;if(n>10&&n<20)return c;if(m>1&&m<5)return b;if(m==1)return a;return c}
 const dn=r=>r.show||r.name;
-function streakTag(r){const s=r.streak;if(!s||s.n<3)return "";const soon=!s.plus&&s.n>=45&&s.n<50;return `<span class="tag streak${soon?" soon":""}" title="челленджей закрыто подряд">🏅 ${s.n}${s.plus?"+":""} подряд${soon?" · скоро 50":""}</span>`}
+function streakTag(r){if(!r.closed)return "";return `<span class="tag streak" title="закрытых челленджей по итогам, которые выкладывал Макс">🏅 ${r.closed} закрыто</span>`}
 function tagOf(r){const t=[];if(r.role=="strong")t.push('<span class="tag strong">силач</span>');else if(r.role=="bag")t.push('<span class="tag bag">мешок</span>');else t.push('<span class="tag">в игре</span>');if(r.newbie)t.push('<span class="tag new">· первый год</span>');const st=streakTag(r);if(st)t.push(st);return t.join(" ")}
 
 const COLORS=["#E8478F","#8B4FD8","#E07B2A","#2E7FD4","#3A9E4D","#D4A017","#C0509E","#1FA8B5","#2E8B57","#D9503F","#5566D8","#8FA31E"];
@@ -585,6 +585,7 @@ renderAll();
         const ph=String(r[9]||"").trim();if(/^img\/ava\/[a-z0-9]+\.jpg$/i.test(ph))x.photo=ph;
         
         const bd=String(r[11]||"").trim();if(/^\d{1,2}\.\d{1,2}$/.test(bd))x.bd=bd;
+        const cl=parseInt(r[14]||"",10);if(cl>0)x.closed=cl;
         const fl=String(r[10]||"").trim();if(/^https:\/\/docs\.google\.com\/forms\//.test(fl))x.form=fl;
         const un=String(r[12]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_]{4,32}$/.test(un))x.tg=un;
         const ig=String(r[13]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_.]{2,30}$/.test(ig))x.ig=ig});
