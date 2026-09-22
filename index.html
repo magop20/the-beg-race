@@ -46,6 +46,7 @@ button,input{font:inherit;color:inherit}
 .stat.hot{background:var(--acid);border-color:transparent}
 .stat.hot b{color:var(--ink)}
 .stat.hot span,.stat.hot small{color:rgba(11,12,14,.75)}
+.stat b .of{font-size:.62em;color:var(--muted)}
 .stat b{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
 .stat span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
 .stat small{display:block;color:var(--text);font-weight:700;font-size:13px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -183,8 +184,8 @@ a.bd:hover{background:var(--acid)}
 @media(max-width:640px){
   .stats{grid-template-columns:repeat(3,1fr);gap:6px}
   .stat{padding:8px 9px;display:grid;grid-template-rows:28px auto auto}
-  .stat b{font-size:18px;letter-spacing:-.02em}
-  .stat small{font-size:11px}
+  .stat b{font-size:16px;letter-spacing:-.02em;white-space:nowrap}
+  .stat small{font-size:10.5px;font-weight:600}
   .stat span{font-size:10px;line-height:1.2;align-self:start}
 
   .stat.hot{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:baseline}
@@ -417,9 +418,9 @@ function stats(){
   const lm=lead("М"),lw=lead("Ж");
   $("stats").innerHTML=`
    <div class="stat hot"><span>до финиша сезона</span><b>${daysLeft()} ${plural(daysLeft(),"день","дня","дней")}</b><small>до 27 сентября</small></div>
-   <div class="stat"><span>закрыли дистанцию</span><b>${done.length} из ${DATA.runners.length}</b><small>${DATA.runners.length?Math.round(done.length/DATA.runners.length*100):0}% клуба</small></div>
-   <div class="stat"><span>клуб набегал за челлендж</span><b>${fmt(club,0)} км</b><small>это ${fmt(club/112,0)} км на человека</small></div>
-   <div class="stat"><span>лидеры челленджа</span><b>${lm?fmt(lm.total,0):"-"} · ${lw?fmt(lw.total,0):"-"}</b><small>${lm?esc(dn(lm)):"-"} · ${lw?esc(dn(lw)):"-"}</small></div>`;
+   <div class="stat"><span>закрыли</span><b>${done.length}<span class="of">/${DATA.runners.length}</span></b><small>${DATA.runners.length?Math.round(done.length/DATA.runners.length*100):0}% клуба</small></div>
+   <div class="stat"><span>набегали</span><b>${fmt(club,0)} км</b><small>${fmt(club/Math.max(1,DATA.runners.length),0)} км на человека</small></div>
+   <div class="stat"><span>лидеры</span><b>${lm?fmt(lm.total,0):"-"} · ${lw?fmt(lw.total,0):"-"}</b><small>${lm?esc(dn(lm)):"-"} · ${lw?esc(dn(lw)):"-"}</small></div>`;
 }
 function plural(n,a,b,c){n=Math.abs(n)%100;const m=n%10;if(n>10&&n<20)return c;if(m>1&&m<5)return b;if(m==1)return a;return c}
 const dn=r=>r.show||r.name;
