@@ -392,10 +392,10 @@ const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSefJ1R_ZsYerzJyceANHhz0
 const fmt=(x,d=1)=>x==null?"-":x.toLocaleString("ru-RU",{minimumFractionDigits:0,maximumFractionDigits:d});
 const paceNow=()=>{const all=SEASON.end-SEASON.start,gone=Date.now()-SEASON.start;return Math.max(0,Math.min(1,gone/all))};
 const daysLeft=()=>{const now=new Date(),ms=SEASON.end-now;return Math.max(0,Math.ceil(ms/864e5))};
-let loadedAt=null;
+let loadedAt=null,maxAt="";
 function setSource(){const s=$("src");s.classList.toggle("live",live);
-  const when=loadedAt?loadedAt.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}):"";
-  s.querySelector("span").textContent=live?`данные из таблицы Макса на ${when}`:"снимок таблицы на "+SNAP_DATE}
+  const when=loadedAt?loadedAt.toLocaleString("ru-RU",{hour:"2-digit",minute:"2-digit"}):"";
+  s.querySelector("span").textContent=!live?("снимок таблицы на "+SNAP_DATE):(maxAt?`Макс обновлял километры ${maxAt}, страница загружена в ${when}`:`данные из таблицы Макса, загружено в ${when}`)}
 
 function stats(){
   const R=DATA.runners.filter(r=>r.total>0), done=R.filter(r=>r.total>=r.need);
@@ -552,6 +552,12 @@ renderAll();
   const OUR="1p5it6qrGCk-S9OE9j6r4sDdmFW_-L7NcyEC8-itWM9Q";
   const sheetCSV=async name=>{const c=new AbortController();const tm=setTimeout(()=>c.abort(),8000);
     try{const r=await fetch(`https://docs.google.com/spreadsheets/d/${OUR}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(name)}&t=${Date.now()}`,{signal:c.signal});if(!r.ok)throw 0;return parseCSV(await r.text())}finally{clearTimeout(tm)}};
+  try{
+    const chk=await sheetCSV("Проверка связки");
+    const cell=(chk.find(r=>(r[2]||"").startsWith("Макс обновлял"))||[])[3];
+    if(cell){const d2=new Date(cell.replace(" ","T"));
+      if(!isNaN(d2))maxAt=d2.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"});setSource()}
+  }catch(e){}
   try{
     const rows=await sheetCSV("Участники");
     if(norm(rows[0][0]).startsWith("имя")){
