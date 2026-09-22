@@ -119,7 +119,9 @@ button,input{font:inherit;color:inherit}
 /* личники */
 .prhead{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
 .podium{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.pd{background:var(--surface);border-radius:10px;padding:14px;position:relative;overflow:hidden}
+.podium{align-items:end}
+.pd{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:14px;position:relative;overflow:hidden}
+.pd:first-child{border-color:var(--ink);box-shadow:5px 5px 0 var(--ink);padding:20px 16px}
 .pd .place{font-family:var(--display);font-size:44px;line-height:1;color:var(--surface2);position:absolute;right:10px;top:6px}
 .pd:first-child{background:linear-gradient(160deg,#d9fbc8,var(--surface) 70%)}
 .pd:first-child .place{color:rgba(120,254,63,.3)}
@@ -130,6 +132,8 @@ button,input{font:inherit;color:inherit}
 .tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .tbl th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:700}
 .tbl td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.tbl tbody tr:nth-child(even) td{background:#F7FAF4}
+.tbl tbody tr:hover td{background:var(--acid-soft)}
 .tbl td.r,.tbl th.r{text-align:right}
 .tbl tr.me td{background:var(--acid-soft)}
 .tbl .n{font-weight:700}
@@ -144,7 +148,8 @@ button,input{font:inherit;color:inherit}
 .rule{background:none;border-radius:0;padding:var(--s3) 0;border-top:2px solid var(--ink);counter-increment:r}
 .rule h3{display:flex;gap:10px;align-items:baseline}
 .rule h3::before{content:counter(r,decimal-leading-zero);font-size:13px;color:var(--green);letter-spacing:0;font-family:var(--display)}
-.db .ghost{display:block;text-align:center;text-decoration:none;margin-bottom:8px}
+.db .ghost{display:block;text-align:center;text-decoration:none;margin-bottom:8px;padding:12px;border-width:2px}
+.db #setme{background:var(--acid);border-color:var(--ink);color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
 .bdays{background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .bdays b{font-family:var(--display);font-weight:400;font-size:15px;margin-right:4px}
 .bd{background:var(--surface2);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--text);text-decoration:none;display:inline-block}
@@ -204,9 +209,10 @@ a.bd:hover{background:var(--acid)}
 .flow b{display:block;font-family:var(--display);font-weight:400;color:var(--green);font-size:20px}
 
 /* карточка участника */
-dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:0;width:min(440px,calc(100% - 32px))}
-dialog::backdrop{background:rgba(20,30,20,.45)}
-.dh{padding:18px 18px 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}.dh>div{flex:1;min-width:0}
+dialog{background:var(--surface);color:var(--text);border:2px solid var(--ink);box-shadow:8px 8px 0 var(--ink);border-radius:14px;padding:0;width:min(440px,calc(100% - 32px))}
+dialog::backdrop{background:rgba(9,12,9,.58)}
+.dh{padding:18px 18px 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}.dh>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.dh h2{line-height:1.15}
 .dh h2{margin:0;font-family:var(--display);font-weight:400;font-size:24px;line-height:1.1}
 .dx{background:none;border:0;font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
 .db{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px}
