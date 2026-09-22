@@ -133,8 +133,8 @@ a.bd:hover{background:var(--acid)}
 .dphotow{flex:none;margin-right:12px;line-height:0;border-radius:50%;display:block}
 .dphotow:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:50%}
 .dphoto{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--acid);display:block}
-.tglink{color:inherit;text-decoration:none;background:linear-gradient(var(--acid),var(--acid)) 0 100%/100% 3px no-repeat;padding-bottom:1px}
-.tglink:hover{background-size:100% 100%;border-radius:4px}
+.tglink{color:inherit;text-decoration:none}
+.tglink:hover{background:var(--acid);border-radius:4px;box-shadow:0 0 0 4px var(--acid)}
 .soclist{display:flex;gap:6px;margin-left:auto;margin-right:6px}
 .soc:focus-visible{outline:2px solid var(--acid);outline-offset:2px;border-radius:50%}
 .soc{width:34px;height:34px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;text-decoration:none}
@@ -512,7 +512,7 @@ renderAll();
         x.newbie=/^да/i.test(r[3]||"");const sm=(r[4]||"").trim();if(sm&&[...sm].length<=2&&!/[<>&"]/.test(sm))x.smile=sm;
         const sv=String(r[7]||"").trim();if(/^\d+\+?$/.test(sv))x.streak={n:parseInt(sv),plus:sv.endsWith("+")};
         if(r[8]&&r[8].trim())x.show=r[8].trim();
-        const ph=String(r[9]||"").trim();if(/^img\/ava\/\d+\.jpg$/.test(ph))x.photo=ph;
+        const ph=String(r[9]||"").trim();if(/^img\/ava\/[a-z0-9]+\.jpg$/i.test(ph))x.photo=ph;
         
         const bd=String(r[11]||"").trim();if(/^\d{1,2}\.\d{1,2}$/.test(bd))x.bd=bd;
         const un=String(r[12]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_]{4,32}$/.test(un))x.tg=un;
