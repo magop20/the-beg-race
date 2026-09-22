@@ -1,0 +1,529 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>[hidden]{display:none!important}img{max-width:100%}body{margin:0}</style></head><body>
+<title>THE BEG · Сезон 78</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@500;600;700;800&display=swap">
+<style>
+:root{
+  --ground:#F2F6EF; --surface:#FFFFFF; --surface2:#EEF3EA; --line:#DCE3D6;
+  --text:#17191C; --muted:#667063; --dim:#9AA397;
+  --acid:#78FE3F; --green:#2E9E0F; --acid-ink:#0B0C0E; --acid-soft:rgba(120,254,63,.28);
+  --bag:#8A4FE0; --bag-soft:rgba(138,79,224,.14); --red:#E5484D;
+  --pink:#FF5CA8; --warn:#FFB23F;
+  --display:"Dela Gothic One","Arial Black",Impact,sans-serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+body{background:var(--ground);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+*{box-sizing:border-box}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acid);outline-offset:2px}
+
+/* шапка */
+.top{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.mark{font-family:var(--display);color:var(--acid);box-shadow:0 3px 0 rgba(0,0,0,.15);font-size:30px;line-height:.86;letter-spacing:.5px;background:#000;padding:10px 12px;border-radius:4px}
+.season{flex:1;min-width:220px}
+.season h1{font-family:var(--display);font-weight:400;font-size:clamp(24px,4.6vw,40px);line-height:1;margin:0;text-transform:uppercase;text-wrap:balance}
+.season h1 em{font-style:normal;color:var(--green)}
+.season p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.src{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.src i{width:8px;height:8px;border-radius:50%;background:var(--warn);display:inline-block}
+.src.live i{background:var(--green);box-shadow:0 0 8px var(--acid)}
+
+/* вкладки */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
+.tab{background:none;border:0;padding:10px 14px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--text);border-color:var(--acid)}
+
+/* сводка */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--surface);border-radius:10px;padding:12px 14px}
+.stat b{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.stat small{display:block;color:var(--text);font-weight:700;font-size:13px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat.hot b{color:var(--green)}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.stat b{font-size:19px}}
+
+/* панель */
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.search{flex:1 1 220px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 14px}
+.search::placeholder{color:var(--dim)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--acid);color:var(--acid-ink);border-color:var(--acid)}
+.ghost{background:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;color:var(--muted)}
+.ghost:hover{color:var(--text)}
+
+/* трасса: горная тропа как на рисунке Макса */
+.board{position:relative;border-radius:16px;overflow:hidden;background:#f7faf4;border:1px solid var(--line)}
+.scene{height:190px;position:relative}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}
+.sceneimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.sign{position:absolute;right:18px;bottom:18px;background:#8a5a2b;color:#fff7e6;font-family:var(--display);font-size:15px;line-height:1.1;padding:10px 14px;border-radius:6px;border:3px solid #5e3b1a;transform:rotate(-2deg);box-shadow:0 4px 0 #5e3b1a;text-align:center}
+.boardtitle{position:absolute;left:20px;top:18px;right:190px}
+.boardtitle b{font-family:var(--display);font-weight:400;font-size:clamp(24px,4.5vw,40px);color:#123a5c;line-height:1;display:block;text-shadow:0 2px 0 #fff,0 0 12px #fff,0 0 12px #fff}
+.boardtitle span{font-weight:800;color:#123a5c;text-transform:uppercase;letter-spacing:.08em;font-size:12px}
+.lanes{background:rgba(255,255,255,.92);margin:0 12px 12px;border-radius:12px;padding:8px 8px 10px;position:relative}
+.lhead{display:grid;grid-template-columns:30px minmax(96px,160px) 1fr 74px 74px 50px;gap:10px;padding:6px 8px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);align-items:end}
+.lhead .fin{justify-self:end;background:#d6383b;color:#fff;font-family:var(--display);font-weight:400;font-size:12px;letter-spacing:.04em;padding:4px 8px;border-radius:4px;border:2px solid #7a1f21;transform:translateY(-2px)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin:10px 4px 0}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:18px;height:8px;border-radius:4px;display:inline-block}
+.grid{display:flex;flex-direction:column;gap:2px}
+.lane{display:grid;grid-template-columns:30px minmax(96px,160px) 1fr 74px 74px 50px;gap:10px;align-items:center;padding:7px 8px;border-radius:10px;cursor:pointer;border:1px solid transparent;background:none;text-align:left;width:100%;color:var(--text)}
+.lane:hover{background:#f1f7ec}
+.lane.me{border-color:var(--green);background:var(--acid-soft)}
+.pos{font-family:var(--display);font-size:14px;color:var(--dim);text-align:right;font-variant-numeric:tabular-nums}
+.lane:nth-child(-n+3) .pos{font-size:17px}
+.who{min-width:0}
+.who b{display:block;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tag.bag{color:var(--bag)} .tag.strong{color:var(--green)} .tag.new{color:#d9468b} .tag.streak{color:#b7791f;white-space:nowrap} .tag.streak.soon{color:#c2410c}
+.track{position:relative;height:30px}
+.track::before{content:"";position:absolute;left:0;right:0;top:50%;height:12px;transform:translateY(-50%);background:#edf0ea;border-radius:8px}
+.fill{position:absolute;left:0;top:50%;height:14px;transform:translateY(-50%);border-radius:8px;min-width:10px;transition:width .8s cubic-bezier(.2,.7,.2,1);box-shadow:inset 0 -3px 0 rgba(0,0,0,.12),inset 0 3px 0 rgba(255,255,255,.35)}
+.trail{position:absolute;top:50%;right:0;border-top:2px dashed #b9c0b3;transform:translateY(-1px)}
+.ava{position:absolute;z-index:2;top:50%;transform:translate(-55%,-58%);font-size:24px;line-height:1;filter:drop-shadow(0 2px 1px rgba(0,0,0,.25));transition:left .8s cubic-bezier(.2,.7,.2,1)}
+.crown{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:12px}
+.post{position:absolute;z-index:0;right:-4px;top:1px;bottom:1px;width:6px;background:repeating-linear-gradient(#111 0 5px,#fff 5px 10px);border-radius:2px}
+.num{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.num.left{color:var(--red)}
+.num.pct{color:var(--muted);font-size:13px}
+.lane.done .num.left{color:var(--green);font-family:var(--display);font-weight:400;font-size:13px}
+.lane.done .num.pct{color:var(--green)}
+.empty{color:var(--muted);padding:24px 8px}
+@media (max-width:640px){
+  .lhead{display:none}
+  .lane{grid-template-columns:24px 1fr 62px 62px;grid-template-areas:"p w k l" "p t t t";row-gap:2px}
+  .pos{grid-area:p;align-self:start;padding-top:2px}.who{grid-area:w}.track{grid-area:t}.num.km{grid-area:k}.num.left{grid-area:l}.num.pct{display:none}
+  .sign{display:none}.boardtitle{right:20px}.scene{height:150px}
+}
+/* личники */
+.prhead{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.pd{background:var(--surface);border-radius:10px;padding:14px;position:relative;overflow:hidden}
+.pd .place{font-family:var(--display);font-size:44px;line-height:1;color:var(--surface2);position:absolute;right:10px;top:6px}
+.pd:first-child{background:linear-gradient(160deg,#d9fbc8,var(--surface) 70%)}
+.pd:first-child .place{color:rgba(120,254,63,.3)}
+.pd b{display:block;font-weight:800;font-size:16px;position:relative}
+.pd .t{font-family:var(--display);font-size:26px;color:var(--green);font-variant-numeric:tabular-nums;position:relative}
+.pd small{color:var(--muted);position:relative}
+@media (max-width:560px){.podium{grid-template-columns:1fr}}
+.tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tbl th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:700}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.tbl td.r,.tbl th.r{text-align:right}
+.tbl tr.me td{background:var(--acid-soft)}
+.tbl .n{font-weight:700}
+.tbl .rk{color:var(--dim);font-family:var(--display);width:40px}
+.tblwrap{overflow-x:auto}
+.note{color:var(--muted);font-size:12.5px;margin-top:12px;max-width:70ch}
+
+/* правила */
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media (max-width:700px){.rules{grid-template-columns:1fr}}
+.rule{background:var(--surface);border-radius:10px;padding:16px}
+.db .ghost{display:block;text-align:center;text-decoration:none;margin-bottom:8px}
+.bdays{background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bdays b{font-family:var(--display);font-weight:400;font-size:15px;margin-right:4px}
+.bd{background:var(--surface2);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--text);text-decoration:none;display:inline-block}
+a.bd:hover{background:var(--acid)}
+.bdnote{color:var(--dim);font-size:12px}
+.bd.today{background:var(--acid);color:var(--acid-ink)}
+.dphotow{flex:none;margin-right:12px;line-height:0}
+.dphoto{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--acid);display:block}
+.tglink{color:inherit;text-decoration:none;border-bottom:3px solid var(--acid)}
+.soclist{display:flex;gap:6px;margin-left:auto;margin-right:6px}
+.soc{width:34px;height:34px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;text-decoration:none}
+.soc.tg{color:#2AABEE}.soc.ig{color:#C13584}
+.soc:hover{background:var(--acid);color:var(--acid-ink)}
+.shoph{font-family:var(--display);font-weight:400;font-size:20px;margin:6px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:10px}
+.item{margin:0;background:var(--surface);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.item img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#fff;display:block}
+.item figcaption{padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.item figcaption span{color:var(--muted);font-size:13px}.item figcaption i{font-style:normal;font-weight:800;margin-top:4px}
+.promos{display:grid;gap:8px;margin-bottom:10px}
+.promo{background:var(--surface);border-radius:10px;padding:12px 14px;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.promo code{font-family:var(--display);font-size:17px;background:#000;color:var(--acid);padding:4px 8px;border-radius:4px;user-select:all}
+.promo span{color:var(--muted);font-size:14px;flex:1 1 200px}
+#p-shop a{color:var(--green);font-weight:700}
+@media(max-width:600px){.item img{aspect-ratio:4/3}}
+
+.rule h3{margin:0 0 6px;font-family:var(--display);font-weight:400;font-size:18px;text-transform:uppercase}
+.rule p{margin:0;color:#c9cec6}
+.rule .big{color:var(--green);font-weight:800}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ladder span{background:var(--surface2);border-radius:6px;padding:6px 9px;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.money{grid-column:1/-1}
+.flow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;margin-top:10px}
+.flow div{flex:1 1 150px;background:var(--surface2);border-radius:8px;padding:10px}
+.flow b{display:block;font-family:var(--display);font-weight:400;color:var(--green);font-size:20px}
+
+/* карточка участника */
+dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:0;width:min(440px,calc(100% - 32px))}
+dialog::backdrop{background:rgba(20,30,20,.45)}
+.dh{padding:18px 18px 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}.dh>div{flex:1;min-width:0}
+.dh h2{margin:0;font-family:var(--display);font-weight:400;font-size:24px;line-height:1.1}
+.dx{background:none;border:0;font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
+.db{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kv div{background:var(--surface2);border-radius:8px;padding:9px}
+.kv b{display:block;font-family:var(--display);font-weight:400;font-size:19px;font-variant-numeric:tabular-nums}
+.kv span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.weeks{display:flex;gap:6px;align-items:flex-end;height:90px}
+.wk{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end;height:100%}
+.wk i{display:block;width:100%;background:var(--green);border-radius:3px 3px 0 0;min-height:2px}
+.wk span{font-size:11px;color:var(--muted);white-space:nowrap}
+.wk b{font-size:12px;font-variant-numeric:tabular-nums}
+.msg{background:var(--acid-soft);border-radius:8px;padding:10px 12px;font-weight:700}
+
+/* режим картинки для чата */
+body.poster .bar,body.poster .tabs,body.poster .legend .hint,body.poster .src{display:none}
+body.poster .wrap{max-width:900px}
+.posterbar{display:none;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--muted);font-size:12px}
+body.poster .posterbar{display:flex}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="mark" aria-label="THE BEG">THE<br>BEG</div>
+    <div class="season">
+      <h1 id="stitle">Сезон <em>78</em> · <span style="white-space:nowrap">7&#8209;27 сентября</span></h1>
+      <p id="ssub">Челлендж клуба: у каждого своя дистанция на три недели</p>
+    </div>
+    <div class="src" id="src"><i></i><span>данные загружаются</span></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" id="t-race" aria-selected="true" data-p="race">Гонка сезона</button>
+    <button class="tab" role="tab" id="t-pr" aria-selected="false" data-p="pr">Личники клуба</button>
+    <button class="tab" role="tab" id="t-rules" aria-selected="false" data-p="rules">Как это работает</button>
+    <button class="tab" role="tab" id="t-shop" aria-selected="false" data-p="shop">Мерч и промокоды (демо)</button>
+  </nav>
+
+  <section id="p-race">
+    <div class="posterbar"><span id="pstamp"></span><button class="ghost" id="exitposter">Вернуть панель</button></div>
+    <div class="bdays" id="bdays" hidden></div>
+    <div class="stats" id="stats"></div>
+    <div class="bar">
+      <input class="search" id="q" type="search" placeholder="Найди себя: начни вводить имя" autocomplete="off">
+      <div class="chips" id="fchips">
+        <button class="chip" data-f="all" aria-pressed="true">Все</button>
+        <button class="chip" data-f="m" aria-pressed="false">Парни</button>
+        <button class="chip" data-f="w" aria-pressed="false">Девушки</button>
+        <button class="chip" data-f="game" aria-pressed="false">В игре</button>
+        <button class="chip" data-f="bag" aria-pressed="false">Мешки</button>
+        <button class="chip" data-f="done" aria-pressed="false">Закрыли</button>
+      </div>
+      <button class="ghost" id="sortbtn">Порядок: по км</button>
+    </div>
+    <div class="board" id="board">
+      <div class="scene">
+        <img class="sceneimg" src="img/scene.jpg" alt="" aria-hidden="true">
+        <div class="boardtitle"><b id="btitle">78 челлендж</b><span>Одна команда, одна цель</span></div>
+        <div class="sign">Сегодня ближе,<br>чем вчера</div>
+      </div>
+      <div class="lanes">
+        <div class="lhead"><span></span><span>Участник</span><span class="fin">ФИНИШ</span><span style="text-align:right">Пройдено</span><span style="text-align:right">Осталось</span><span style="text-align:right">%</span></div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i style="background:linear-gradient(90deg,#ff5ca8,#8a4fe0,#ff9a3c,#3aa0ff)"></i>у каждого свой цвет и свой смайл</span>
+      <span>👑 и «ГОТОВО!» значит дистанция закрыта</span>
+      <span class="hint">Нажми на строку, чтобы открыть свою карточку</span>
+    </div>
+  </section>
+
+  <section id="p-pr" hidden>
+    <div class="prhead">
+      <div class="chips" id="dchips">
+        <button class="chip" data-d="5" aria-pressed="true">5 км</button>
+        <button class="chip" data-d="10" aria-pressed="false">10 км</button>
+        <button class="chip" data-d="21" aria-pressed="false">Полумарафон</button>
+        <button class="chip" data-d="42" aria-pressed="false">Марафон</button>
+      </div>
+      <div class="chips" id="gchips">
+        <button class="chip" data-g="all" aria-pressed="true">Все</button>
+        <button class="chip" data-g="М" aria-pressed="false">Парни</button>
+        <button class="chip" data-g="Ж" aria-pressed="false">Девушки</button>
+      </div>
+      <input class="search" id="q2" type="search" placeholder="Найди себя в рейтинге" autocomplete="off">
+    </div>
+    <div class="podium" id="podium"></div>
+    <div class="tblwrap"><table class="tbl" id="prtbl"></table></div>
+    <p class="note" id="prnote"></p>
+  </section>
+
+  <section id="p-rules" hidden>
+    <div class="rules">
+      <div class="rule"><h3>Старт для всех</h3><p>Любой участник начинает с <span class="big">50 км</span> за челлендж, хоть чемпион мира, хоть вчера купил кроссовки. Пробежки скидываем в группу.</p></div>
+      <div class="rule"><h3>Мешки</h3><p>Бегаешь для себя и общения: остаёшься на <span class="big">50 км</span>, в дележе банка не участвуешь. За 13 закрытых челленджей подряд клуб дарит медаль.</p></div>
+      <div class="rule"><h3>В игре на банк</h3><p>Пишешь в группе «хочу бегать больше», и за каждый закрытый челлендж цель растёт на <span class="big">3 км</span>.</p>
+        <div class="ladder"><span>Девушки 60 · 63 · 66 км</span><span>Парни 80 · 83 · 86 км</span></div></div>
+      <div class="rule"><h3>Честность</h3><p>Не бегал первую неделю, а на восьмой день заболел: челлендж не закрыт. Участники, которые не присылают пробежки, в банке и призах не участвуют.</p></div>
+      <div class="rule money"><h3>Куда идёт банк</h3><p>Стартовый взнос 2000 ₽ возвращается, если закрыл свою дистанцию. Взносы тех, кто не добежал, складываются в банк и делятся так. Первые деньги не раньше чем через <span class="big">84 дня</span> в игре.</p>
+        <div class="flow">
+          <div><b>20%</b>силачам: 50 челленджей подряд, поровну на всех</div>
+          <div><b>5% + 5%</b>лучшему парню и лучшей девушке по км за сезон</div>
+          <div><b>остаток</b>поровну всем, кто закрыл дистанцию в игре</div>
+        </div>
+        <p class="note" id="bankex">Пример 77 сезона: в банке 8000 ₽, силачам 1600 ₽ (по 400 ₽ на четверых), лидерам по 320 ₽, остаток 5760 ₽ на 38 человек, по 151 ₽.</p>
+      </div>
+      <div class="rule"><h3>Больничный</h3><p>Кто в челлендже больше полугода, может раз в год уйти на больничный без потери денег. Если получаешь получку, следующие <span class="big">3</span> челленджа бежишь с того же объёма, но без выплаты. Больничный дают тем, кто бегал: на день заявки твои км должны быть не меньше, чем цель делить на 21 и умножить на прошедшие дни.</p></div>
+      <div class="rule"><h3>Призы сезона</h3><p>Самая длинная пробежка и самая быстрая от 10 км (предупреди кружочком перед стартом), лидер недели по км: призы отдельно у девушек и парней.</p></div>
+      <div class="rule"><h3>Силачи</h3><p>50 челленджей подряд без больничных и выходных: у парней это 227 км, у девушек 207 км за три недели. Дальше каждый челлендж делишь с другими силачами 20% банка. Сейчас их <span class="big" id="strongN">4</span>.</p></div>
+    </div>
+  </section>
+  <section id="p-shop" hidden>
+    <h3 class="shoph">Мерч клуба <span class="tag new">демо, цены и наличие уточняем</span></h3>
+    <div class="shop">
+      <figure class="item"><img src="img/tee-pink.jpg" alt="Беговая футболка THE BEG, розовый градиент, карта Уфы на спине" loading="lazy"><figcaption><b>Беговая футболка</b><span>розовая, карта Уфы на спине, пошив Glavsport. Это макет, отшив в работе</span><i>2 500 ₽</i></figcaption></figure>
+      <figure class="item"><img src="img/tee-dark.jpg" alt="Чёрная футболка THE BEG с логотипом" loading="lazy"><figcaption><b>Футболка с логотипом</b><span>чёрная, есть ещё тёмно-зелёная и светлая</span><i>2 900 ₽</i></figcaption></figure>
+      <figure class="item"><img src="img/jacket.jpg" alt="Розовая куртка THE BEG" loading="lazy"><figcaption><b>Розовая куртка</b><span>ветровка с капюшоном, логотип на груди</span><i>2 900 ₽ участникам · 3 500 ₽ остальным</i></figcaption></figure>
+      <figure class="item"><img src="img/tee-green.jpg" alt="Тёмно-зелёная футболка THE BEG" loading="lazy"><figcaption><b>Тот же принт, зелёная</b><span>как выглядит на человеке</span><i>2 900 ₽</i></figcaption></figure>
+      <figure class="item"><img src="img/hoodie.jpg" alt="Участники в футболках THE BEG" loading="lazy"><figcaption><b>Другие вещи с принтом</b><span>светлые футболки и свитшоты, цвета и цены уточняем</span><i>по запросу</i></figcaption></figure>
+      <figure class="item"><img src="img/jacket2.jpg" alt="Партия розовых курток THE BEG" loading="lazy"><figcaption><b>Куртки из последней партии</b><span>так они приезжают, размеры разбирают быстро</span><i>2 900 ₽ участникам</i></figcaption></figure>
+    </div>
+    <p class="note">Заказ: набираем от 10 штук, перевод Полине <a href="https://t.me/impolly11" target="_blank" rel="noopener">@impolly11</a>. Размеры и наличие уточняй у неё.</p>
+    <h3 class="shoph">Промокоды <span class="tag new">демо, проверяем актуальность</span></h3>
+    <div class="promos">
+      <div class="promo"><code>THEBEG</code><span>клубный промокод на старты myrace.info: трейлы RunNuriman, Забег в платьях</span></div>
+      <div class="promo"><code>SLB2030</code><span>скидка 20% на регистрацию <a href="https://zabeg2030.ru/" target="_blank" rel="noopener">Забег 2030</a>, Москва, Лужники</span></div>
+      <div class="promo"><code>IVANOV</code><span>уточняем, на какой старт действует</span></div>
+    </div>
+    <p class="note">Знаешь действующий промокод для клуба? Скинь Максу, добавим сюда.</p>
+  </section>
+</div>
+
+<dialog id="dlg" aria-labelledby="dname"><div class="dh"><a id="dphotow" class="dphotow" target="_blank" rel="noopener" hidden><img id="dphoto" class="dphoto" alt=""></a><div><h2 id="dname"></h2><div class="tag" id="dtag"></div></div><div class="soclist" id="dsoc"></div><button class="dx" id="dclose" aria-label="Закрыть">×</button></div><div class="db" id="dbody"></div></dialog>
+
+<script>
+const SHEET_ID="1rT5gmpRMTrTXtB_4OMLGcws0F-Sq52k3", SHEET_GID="1403297837";
+const SNAP_CSV="ФИО участника,7-13 сент,14-20 сент,21-27 сент,всего,осталось,нужно\nTaras,\"126,85\",\"74,01\",,\"200,86\",,152\nДамир,\"93,41\",\"79,12\",,\"172,53\",,149\nТимур,\"95,97\",\"76,54\",,\"172,51\",\"42,49\",215\nОледжио,\"74,29\",\"83,64\",,\"157,93\",,137\nСергей,\"64,7\",\"86,53\",,\"151,23\",,149\nAna Miller,\"75,74\",\"72,06\",,\"147,8\",,99\nАйдар Садыков,\"75,8\",\"70,02\",,\"145,82\",,108\nЛиана,\"62,56\",\"76,42\",,\"138,98\",,132\nАлександр Сити,\"108,57\",\"30,3\",,\"138,87\",\"7,13\",146\nАртём ,\"55,63\",\"81,71\",,\"137,34\",\"48,66\",186\nИскандер А,\"56,48\",\"80,77\",,\"137,25\",\"38,75\",176\nРадмир,\"116,45\",\"16,56\",,\"133,01\",\"90,99\",224\nЭльвира Каниева,\"64,46\",\"66,06\",,\"130,52\",,126\nДенис,\"55,96\",\"72,06\",,\"128,02\",,125\nРамиль,\"48,83\",\"78,33\",,\"127,16\",,50\nАлёна,\"65,4\",\"59,17\",,\"124,57\",,50\nBulat Bikbaev ,\"41,67\",\"78,02\",,\"119,69\",\"90,31\",210\nДаян,\"61,67\",\"56,79\",,\"118,46\",,50\nЛилия,\"71,15\",\"45,41\",,\"116,56\",\"14,44\",131\nАлександр сочи,\"66,42\",\"47,92\",,\"114,34\",\"92,66\",207\nМАРАТ,\"59,29\",\"51,57\",,\"110,86\",\"8,14\",119\nОлеся И,\"56,93\",\"51,57\",,\"108,5\",\"62,5\",171\nАня Вербина,\"53,01\",\"54,81\",,\"107,82\",,50\nАнгелина,\"50,03\",\"57,02\",,\"107,05\",,81\nАльбина Гадельшина,\"61,03\",\"43,96\",,\"104,99\",\"12,01\",117\nРома Сизоненко,\"67,89\",\"35,66\",,\"103,55\",\"30,45\",134\nДарья Валеева,\"52,75\",\"46,07\",,\"98,82\",\"6,18\",105\nАрчи,\"56,58\",\"42,08\",,\"98,66\",\"44,34\",143\nРоберт,\"45,55\",\"52,73\",,\"98,28\",,50\nЛюбовь Прохорова,\"77,19\",\"19,94\",,\"97,13\",,75\nПолина,\"44,99\",52,,\"96,99\",,50\nДенис Ролитович,\"57,06\",\"39,92\",,\"96,98\",\"1,02\",98\nДмитрий,\"52,62\",\"41,28\",,\"93,9\",\"10,1\",104\nДенис Зайцев,\"64,71\",\"22,6\",,\"87,31\",,50\nМарина,\"44,57\",\"39,83\",,\"84,4\",,50\nДаша Кочергина,\"67,3\",\"16,25\",,\"83,55\",,50\nТагир,\"51,98\",\"31,26\",,\"83,24\",\"110,76\",194\nСергей Ростов,\"43,61\",\"39,04\",,\"82,65\",,60\nСайёра,\"34,83\",\"47,54\",,\"82,37\",,78\nАлександр Зеленцов,\"44,66\",\"37,25\",,\"81,91\",\"16,09\",98\nИльгам,\"73,92\",\"7,77\",,\"81,69\",,50\nКристина,\"39,81\",\"40,92\",,\"80,73\",\"30,27\",111\nКостя Гроссман,\"45,08\",\"34,99\",,\"80,07\",,50\nДилара,\"47,22\",\"31,37\",,\"78,59\",,50\nТимур Юсупов,\"34,2\",\"40,01\",,\"74,21\",,50\nРуст,\"46,22\",\"26,49\",,\"72,71\",,63\nДиана THE ,\"39,48\",\"33,22\",,\"72,7\",\"5,3\",78\nРегина М,\"26,14\",\"44,88\",,\"71,02\",\"33,98\",105\nТома,\"30,32\",\"35,64\",,\"65,96\",,63\nМАрия,\"21,22\",\"40,28\",,\"61,5\",\"25,5\",87\nИлья,\"44,1\",17,,\"61,1\",,50\nРашид,\"31,62\",\"29,2\",,\"60,82\",\"52,18\",113\nИльгизар,\"32,75\",\"26,78\",,\"59,53\",\"44,47\",104\nАндрей Х,\"16,92\",\"41,5\",,\"58,42\",\"66,58\",125\nВалерия,\"50,95\",\"6,05\",,57,12,69\nЕкатерина Семенчук,\"42,7\",\"14,23\",,\"56,93\",\"24,07\",81\nАлександр Шабалин,,\"56,27\",,\"56,27\",\"69,73\",126\nАлександр Самопаленко,,\"55,05\",,\"55,05\",\"45,95\",101\nЭльвира Исламова,\"28,49\",\"25,9\",,\"54,39\",,50\nАртур Латыпов,\"20,01\",\"34,31\",,\"54,32\",,50\nЕкатерина Pro,\"34,6\",\"18,92\",,\"53,52\",,50\nЭкстра,\"20,09\",\"32,52\",,\"52,61\",,50\nЕкатерина К.,\"25,11\",\"25,59\",,\"50,7\",,50\nНурида,\"28,33\",\"21,27\",,\"49,6\",\"0,4\",50\nДмитрий Идельбаев,\"21,2\",\"24,68\",,\"45,88\",\"4,12\",50\nАнастасия Б,\"33,8\",\"10,01\",,\"43,81\",\"6,19\",50\nАйсылу,\"40,99\",,,\"40,99\",\"9,01\",50\nЭлина,\"29,33\",10,,\"39,33\",\"20,67\",60\nАнастасия Альбеева,\"25,59\",\"11,97\",,\"37,56\",\"25,44\",63\nЕкатерина,25,\"12,26\",,\"37,26\",\"12,74\",50\nВячеслав,21,14,,35,15,50\nКсения Головкина,\"28,24\",\"6,36\",,\"34,6\",\"15,4\",50\nАйгуль Багаутдинова,\"24,3\",\"8,02\",,\"32,32\",\"17,68\",50\nРадик,\"24,19\",\"8,02\",,\"32,21\",\"17,79\",50\nМалика,22,\"10,02\",,\"32,02\",\"17,98\",50\nРегина Р,\"21,14\",\"10,62\",,\"31,76\",\"18,24\",50\nЭвелина,21,10,,31,19,50\nОлеся,\"23,73\",7,,\"30,73\",\"56,27\",87\nАльбина,\"19,69\",\"10,85\",,\"30,54\",\"19,46\",50\nАзиза,\"19,04\",\"11,21\",,\"30,25\",\"19,75\",50\nЭвелина Тибеева,,\"28,56\",,\"28,56\",\"34,44\",63\nАлёна Крохалёва,\"28,2\",,,\"28,2\",\"21,8\",50\nБилал,18,10,,28,22,50\nТагир Юмагулов,\"26,63\",,,\"26,63\",\"23,37\",50\nГузелия,26,,,26,24,50\nДарья В,\"15,04\",\"10,46\",,\"25,5\",\"24,5\",50\nЭдуард Усманов,\"25,12\",,,\"25,12\",\"24,88\",50\nОлеся З,\"20,06\",5,,\"25,06\",\"24,94\",50\nОксана Малыш,,\"23,5\",,\"23,5\",\"26,5\",50\nДаша,\"15,65\",\"7,02\",,\"22,67\",\"27,33\",50\nАйсылу В,\"10,43\",\"11,09\",,\"21,52\",\"28,48\",50\nЛеся,,\"20,94\",,\"20,94\",\"29,06\",50\nИльмира,\"20,69\",,,\"20,69\",\"29,31\",50\nОлеся Нечаева,\"20,22\",,,\"20,22\",\"42,78\",63\nРозалия,\"10,29\",\"9,9\",,\"20,19\",\"29,81\",50\nВиталий Тропин,10,\"10,01\",,\"20,01\",\"29,99\",50\nЛяйсан,\"14,15\",\"5,3\",,\"19,45\",\"30,55\",50\nИрина ,\"19,09\",,,\"19,09\",\"30,91\",50\nАлия,,\"17,98\",,\"17,98\",\"32,02\",50\nИрина Зарипова,\"6,5\",\"11,14\",,\"17,64\",\"32,36\",50\nРуслан Юсуп,,\"10,01\",,\"10,01\",\"39,99\",50\nЭльвира Хисматуллина,,,,0,66,66\nИрек,,,,0,50,50\nСветлана,,,,0,50,50\nАдминистратор,,,,0,189,189\nЕлена Тарасова,,,,0,50,50\nБока,,,,,,50\nРакаева Анастасия,,,,,,50\nРустам Гафаров,,,,,,128\nИрочка Прищепа,,,,,,50\nЕвгений Т,,,,,,50\nГульназ,,,,,,99\nЛяйсан Срурова,,,,,,\n";
+const SNAP_DATE="23 сентября";
+const META={"strong": ["Артём", "Bulat Bikbaev", "Александр сочи", "Тагир"], "newbie": ["Полина", "Александр Зеленцов", "Илья", "Рашид", "Азиза", "Эвелина Тибеева", "Ляйсан"], "silent": ["Светлана", "Администратор", "Елена Тарасова", "Бока", "Ракаева Анастасия", "Рустам Гафаров", "Ирочка Прищепа", "Евгений Т", "Гульназ", "Ляйсан Срурова"], "female": ["Ana Miller", "Азиза", "Айгуль Багаутдинова", "Айсылу", "Айсылу В", "Алия", "Альбина", "Альбина Гадельшина", "Алёна", "Алёна Крохалёва", "Анастасия Альбеева", "Анастасия Б", "Ангелина", "Аня Вербина", "Бока", "Валерия", "Гузелия", "Гульназ", "Дарья В", "Дарья Валеева", "Даша", "Даша Кочергина", "Диана THE", "Дилара", "Екатерина", "Екатерина Pro", "Екатерина К.", "Екатерина Семенчук", "Елена Тарасова", "Ильмира", "Ирина", "Ирина Зарипова", "Ирочка Прищепа", "Кристина", "Ксения Головкина", "Леся", "Лиана", "Лилия", "Любовь Прохорова", "Ляйсан", "Ляйсан Срурова", "МАрия", "Малика", "Марина", "Нурида", "Оксана Малыш", "Олеся", "Олеся З", "Олеся И", "Олеся Нечаева", "Полина", "Ракаева Анастасия", "Регина М", "Регина Р", "Розалия", "Сайёра", "Светлана", "Тома", "Эвелина", "Эвелина Тибеева", "Элина", "Эльвира Исламова", "Эльвира Каниева", "Эльвира Хисматуллина"]};
+const PR_SNAP=[{"n": "Максим", "g": "М", "5": 1040, "10": 2198, "21": 4820, "42": 10419}, {"n": "Костя Гроссман", "g": "М", "5": 1611, "10": 3313, "21": 7156}, {"n": "Сайёра", "g": "Ж", "5": 1212, "10": 2557, "21": 6258}, {"n": "Экстра", "g": "М", "5": 1195, "10": 2556, "21": 6630}, {"n": "Арчи", "g": "М", "5": 1198, "10": 2817, "21": 6360}, {"n": "Айдар Садыков", "g": "М", "5": 1060, "10": 2209, "21": 5048, "42": 10731}, {"n": "Taras", "g": "М", "5": 1195, "10": 2432, "21": 7200, "42": 14400}, {"n": "Эльвира Исламова", "g": "Ж", "10": 3265, "21": 8198}, {"n": "Денис Агишев", "g": "М", "5": 1308, "10": 2850, "21": 6286}, {"n": "Марат Ахметшин", "g": "М", "5": 1040, "10": 2264, "21": 5027}, {"n": "Анастасия Миллер", "g": "Ж", "10": 3234, "21": 7550}, {"n": "Ксения Головкина", "g": "Ж", "5": 1339, "10": 2849, "21": 6674, "42": 15519}, {"n": "Александр Тиунов", "g": "М", "5": 1386, "10": 2782, "21": 6364}, {"n": "Роман Сизоненко", "g": "М", "5": 1248, "10": 2714, "21": 6155, "42": 13424}, {"n": "Артем", "g": "М", "5": 1213, "21": 5414, "42": 11705}, {"n": "Тимур Юсупов", "g": "М", "5": 1301, "10": 2699, "21": 6120, "42": 13887}, {"n": "Радмир", "g": "М", "5": 1029, "10": 2147, "21": 4784, "42": 10783}, {"n": "Александр Самопаленко", "g": "М", "10": 3178, "21": 6681}, {"n": "Дилара", "g": "Ж", "10": 3172, "21": 6939}, {"n": "Дарья Кочергина", "g": "Ж", "5": 1419, "10": 2810, "21": 6740, "42": 15219}, {"n": "Регина Каюмова", "g": "Ж", "5": 1438, "10": 2998, "21": 7280}, {"n": "Дамир", "g": "М", "5": 1158, "10": 2474, "21": 5595}, {"n": "Иско", "g": "М", "5": 1105, "10": 2252, "21": 4911, "42": 13781}, {"n": "Вячеслав", "g": "М", "5": 1135, "10": 2288, "21": 5017, "42": 10961}, {"n": "Валерия Волкова", "g": "Ж", "5": 1395, "10": 2857, "21": 6446, "42": 15257}, {"n": "Дима", "g": "М", "5": 1271, "10": 2733, "21": 6060}, {"n": "Олеся", "g": "Ж", "5": 1420, "10": 3131, "21": 7335}, {"n": "Альбеева", "g": "Ж", "10": 2871, "21": 7080}, {"n": "Шарипова Диана", "g": "Ж", "10": 2899}, {"n": "Тагир Юмагулов", "g": "М", "10": 2376, "21": 5376}, {"n": "Рустам Гафаров", "g": "М", "5": 1160, "10": 2337, "21": 5400, "42": 12120}, {"n": "Эвелина", "g": "Ж", "5": 1504, "10": 3099, "21": 7499}, {"n": "Сергей Кузнецов", "g": "М", "5": 961, "10": 2001, "21": 4490, "42": 9360}, {"n": "Олеся И.", "g": "Ж", "5": 1400, "10": 2765, "21": 7026, "42": 14011}, {"n": "Любовь П.", "g": "Ж", "5": 1420, "10": 2940, "21": 6939, "42": 14700}, {"n": "Денис Матюшин", "g": "М", "5": 1227, "10": 2441, "21": 5387, "42": 11925}, {"n": "Айсылу Варисова", "g": "Ж", "5": 1481, "10": 3026, "21": 6619}, {"n": "Иванов Александр", "g": "М", "5": 973, "10": 2175, "21": 4702, "42": 10409}, {"n": "Кристина", "g": "Ж", "5": 1385, "10": 3091, "21": 6223}, {"n": "Елена Тарасова", "g": "Ж", "5": 1422, "10": 2882, "21": 6379, "42": 14083}, {"n": "Решетова Ангелина", "g": "Ж", "5": 1964, "10": 3340, "21": 8195, "42": 16057}, {"n": "Прищепа Ирина", "g": "Ж", "5": 1443, "10": 2936, "21": 6540, "42": 18060}, {"n": "Сулейманова Малика", "g": "Ж", "10": 2963, "21": 6540}, {"n": "Каниева Эльвира", "g": "Ж", "10": 3020, "21": 6960}, {"n": "Каниева Розалия", "g": "Ж", "10": 3283, "21": 8400}, {"n": "Эльвира Хисматуллина", "g": "Ж", "10": 3018, "21": 6997}, {"n": "Бока Оганян", "g": "?", "5": 1451, "10": 2907, "21": 7188}, {"n": "Ильмира Шарафуллина", "g": "Ж", "5": 1437, "10": 2875, "21": 7237}, {"n": "Лиана Гайнуллина", "g": "Ж", "10": 2970, "21": 6565, "42": 12508}, {"n": "Денис Габдулхаков", "g": "М", "10": 2582, "21": 6000, "42": 13920}];
+const SEASON={n:78,start:new Date(2026,8,7),end:new Date(2026,8,27,23,59)};
+
+/* ---------- парсинг таблицы Макса ---------- */
+function parseCSV(t){const rows=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==','){r.push(f);f=""}else if(c=='\n'||c=='\r'){if(c=='\r'&&t[i+1]=='\n')i++;r.push(f);rows.push(r);r=[];f=""}else f+=c}if(f!==""||r.length){r.push(f);rows.push(r)}return rows}
+const num=v=>{if(v==null)return null;const s=String(v).trim().replace(/\s/g,"").replace(",",".");if(!s)return null;const x=parseFloat(s);return isNaN(x)?null:x};
+const norm=s=>String(s||"").toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ").trim();
+const FEMALE=new Set(META.female.map(norm)), STRONG=new Set(META.strong.map(norm)), NEWBIE=new Set(META.newbie.map(norm));
+function genderGuess(n){const k=norm(n);if(FEMALE.has(k))return"Ж";const first=k.split(" ")[0];if(/(а|я)$/.test(first)&&!["илья","никита","кузьма","фома"].includes(first))return"Ж";if(first=="любовь")return"Ж";return"М"}
+function buildRunners(csv){
+  const rows=parseCSV(csv); const h=rows[0].map(x=>norm(x));
+  const iName=0, weekIdx=[], find=re=>h.findIndex(x=>re.test(x));
+  h.forEach((x,i)=>{if(/^\d{1,2}\s*-\s*\d{1,2}\s/.test(x))weekIdx.push(i)});
+  const iTot=find(/^всего/), iNeed=find(/^нужно/), iG=find(/^пол$/), iSt=find(/^статус/);
+  const iPay=find(/получк|банк/)>=0?find(/получк|банк/):8; // столбец «получка»
+  const out=[];
+  for(const r of rows.slice(1)){
+    const name=(r[iName]||"").trim(); if(!name||/администратор/i.test(name))continue;
+    const weeks=weekIdx.map(i=>num(r[i])||0), need=num(r[iNeed]);
+    const total=weeks.reduce((a,b)=>a+b,0);
+    let g=iG>=0&&r[iG]?(/^ж/i.test(r[iG])?"Ж":"М"):genderGuess(name);
+    let st=iSt>=0&&r[iSt]?norm(r[iSt]):"";
+    const k=norm(name);
+    const role=st.startsWith("сил")||STRONG.has(k)?"strong":(st.startsWith("меш")||need===50?"bag":"game");
+    out.push({name,g,weeks,total:Math.round(total*100)/100,need:need||50,pay:num(r[iPay]),role,newbie:NEWBIE.has(k)});
+  }
+  return {runners:out,weekLabels:weekIdx.map(i=>rows[0][i])};
+}
+
+/* ---------- состояние ---------- */
+let DATA=buildRunners(SNAP_CSV), live=false, filter="all", sortMode="km", query="", me="";
+try{me=localStorage.getItem("beg_me")||""}catch(e){}
+const $=id=>document.getElementById(id);
+const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSefJ1R_ZsYerzJyceANHhz01OFOAgiDYJKGtJTkTCnQ1-WRoQ/viewform";
+const fmt=(x,d=1)=>x==null?"-":x.toLocaleString("ru-RU",{minimumFractionDigits:0,maximumFractionDigits:d});
+const daysLeft=()=>{const now=new Date(),ms=SEASON.end-now;return Math.max(0,Math.ceil(ms/864e5))};
+let loadedAt=null;
+function setSource(){const s=$("src");s.classList.toggle("live",live);
+  const when=loadedAt?loadedAt.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}):"";
+  s.querySelector("span").textContent=live?`данные из таблицы Макса на ${when}`:"снимок таблицы на "+SNAP_DATE}
+
+function stats(){
+  const R=DATA.runners.filter(r=>r.total>0), done=R.filter(r=>r.total>=r.need);
+  const club=R.reduce((a,r)=>a+r.total,0);
+  const lead=g=>DATA.runners.filter(r=>r.g==g&&r.role!="bag").sort((a,b)=>b.total-a.total)[0];
+  const lm=lead("М"),lw=lead("Ж");
+  $("stats").innerHTML=`
+   <div class="stat hot"><span>до финиша сезона</span><b>${daysLeft()} ${plural(daysLeft(),"день","дня","дней")}</b><small>до 27 сентября</small></div>
+   <div class="stat"><span>закрыли дистанцию</span><b>${done.length} из ${DATA.runners.length}</b><small>${DATA.runners.length?Math.round(done.length/DATA.runners.length*100):0}% клуба</small></div>
+   <div class="stat"><span>клуб набегал</span><b>${fmt(club,0)} км</b><small>≈ ${fmt(club/40075*100,1)}% экватора</small></div>
+   <div class="stat"><span>лидеры на 5% банка</span><b>${lm?fmt(lm.total,0):"-"} · ${lw?fmt(lw.total,0):"-"}</b><small>${lm?esc(dn(lm)):"-"} · ${lw?esc(dn(lw)):"-"}</small></div>`;
+}
+function plural(n,a,b,c){n=Math.abs(n)%100;const m=n%10;if(n>10&&n<20)return c;if(m>1&&m<5)return b;if(m==1)return a;return c}
+const dn=r=>r.show||r.name;
+function streakTag(r){const s=r.streak;if(!s||s.n<3)return "";const soon=!s.plus&&s.n>=45&&s.n<50;return `<span class="tag streak${soon?" soon":""}" title="челленджей закрыто подряд">🏅 ${s.n}${s.plus?"+":""} подряд${soon?" · скоро 50":""}</span>`}
+function tagOf(r){const t=[];if(r.role=="strong")t.push('<span class="tag strong">силач</span>');else if(r.role=="bag")t.push('<span class="tag bag">мешок</span>');else t.push('<span class="tag">в игре</span>');if(r.newbie)t.push('<span class="tag new">· первый год</span>');const st=streakTag(r);if(st)t.push(st);return t.join(" ")}
+
+const COLORS=["#FF5CA8","#9B5CF0","#FF9A3C","#3AA0FF","#4FC72E","#FFC83D","#F06BC0","#22C7D6","#35B24A","#FF6B5A","#6C7CFF","#B8D32B"];
+const SMILES="🦊 🐼 🦔 🐱 🐶 🐰 🐢 🦆 🐧 🐸 🐨 🦁 🐯 🐻 🐝 🦄 🐙 🦈 🐞 🦉 🐺 🦘 🐬 🦩 🐿️ 🦥 🐌 🦒".split(" ");
+function race(){
+  const hash=n=>Math.abs([...norm(n)].reduce((a,c)=>(a*31+c.charCodeAt(0))|0,7));
+  DATA.runners.forEach(r=>{r.smile=r.smile||SMILES[hash(r.name)%SMILES.length];r.color=COLORS[hash(r.name)%COLORS.length]});
+  let L=DATA.runners.slice();
+  if(filter=="m")L=L.filter(r=>r.g=="М"); if(filter=="w")L=L.filter(r=>r.g=="Ж");
+  if(filter=="game")L=L.filter(r=>r.role!="bag"); if(filter=="bag")L=L.filter(r=>r.role=="bag");
+  if(filter=="done")L=L.filter(r=>r.total>=r.need);
+  L.sort(sortMode=="km"?(a,b)=>b.total-a.total:(a,b)=>b.total/b.need-a.total/a.need);
+  const ranked=L.map((r,i)=>({...r,pos:i+1}));
+  const q=norm(query), shown=q?ranked.filter(r=>norm(r.name).includes(q)||norm(dn(r)).includes(q)):ranked;
+  const g=$("grid");
+  if(!shown.length){g.innerHTML='<div class="empty">Никого не нашли. Проверь, как тебя записали в таблице Макса.</div>';return}
+  const medal=p=>(filter=="all"&&!q&&p<=3)?["🥇","🥈","🥉"][p-1]:p;
+  g.innerHTML=shown.map(r=>{
+    const p=Math.min(1,r.total/r.need), done=r.total>=r.need, left=Math.max(0,r.need-r.total), pc=(p*100).toFixed(1);
+    const cls=["lane",done?"done":"",norm(r.name)==norm(me)?"me":""].join(" ");
+    return `<button class="${cls}" data-n="${esc(r.name)}">
+      <span class="pos">${medal(r.pos)}</span>
+      <span class="who"><b>${esc(dn(r))}</b>${tagOf(r)}</span>
+      <span class="track" aria-label="${fmt(r.total)} из ${r.need} км">
+        <span class="fill" style="width:${pc}%;background:${r.color}"></span>
+        ${done?"":`<span class="trail" style="left:${pc}%"></span>`}
+        <span class="ava" style="left:${Math.min(94,Math.max(4,p*100)).toFixed(1)}%">${done?'<span class="crown">👑</span>':""}${esc(r.smile||"")}</span>
+        <span class="post"></span></span>
+      <span class="num km">${fmt(r.total,0)} км</span>
+      <span class="num left">${done?"ГОТОВО!":fmt(left,2)+" км"}</span>
+      <span class="num pct">${Math.min(100,Math.floor(r.total/r.need*100))}%</span>
+    </button>`}).join("");
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- карточка ---------- */
+function openCard(name){
+  const r=DATA.runners.find(x=>x.name==name); if(!r)return;
+  const link=r.tg?`https://t.me/${r.tg}`:"";
+  $("dname").innerHTML=link?`<a class="tglink" href="${link}" target="_blank" rel="noopener">${esc(dn(r))}</a>`:esc(dn(r));
+  $("dsoc").innerHTML=[r.tg?`<a class="soc tg" href="https://t.me/${r.tg}" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M21.9 4.3 18.8 19c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L7 11.3l-4.9-1.5c-1-.3-1-1 .2-1.5l19.1-7.4c.9-.3 1.7.2 1.4 1.4z"/></svg></a>`:"",
+                      r.ig?`<a class="soc ig" href="https://instagram.com/${r.ig}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>`:""].join("");
+  const dp=$("dphoto"),dpw=$("dphotow");
+  if(r.photo){dp.src=r.photo;dp.alt=dn(r);dpw.hidden=false;dpw.href=link||"#";dpw.style.pointerEvents=link?"auto":"none"}else dpw.hidden=true; $("dtag").innerHTML=tagOf(r);
+  const left=Math.max(0,r.need-r.total), d=daysLeft(), perDay=d?left/d:left;
+  const mx=Math.max(...r.weeks,1);
+  const pr=findPR(r.name,dn(r));
+  $("dbody").innerHTML=`
+   <div class="kv"><div><b>${fmt(r.total)}</b><span>набегал</span></div><div><b>${r.need}</b><span>цель, км</span></div><div><b>${left?fmt(left,2)+" км":"✓"}</b><span>осталось</span></div></div>
+   <div class="msg">${left?`Чтобы закрыть сезон, нужно ${fmt(perDay,2)} км в день ${d?`следующие ${d} ${plural(d,"день","дня","дней")}`:"сегодня"}.`:`Дистанция закрыта${r.total>r.need?`, сверху ещё ${fmt(r.total-r.need)} км`:""}. Пробежки всё равно скидываем.`}</div>
+   <div class="weeks">${r.weeks.map((w,i)=>`<div class="wk"><b>${w?fmt(w):"-"}</b><i style="height:${w/mx*60}px"></i><span>${esc(DATA.weekLabels[i]||"")}</span></div>`).join("")}</div>
+   ${r.pay!=null?`<div class="kv"><div style="grid-column:1/-1"><b>${fmt(r.pay,0)} ₽</b><span>накоплено в банке на сегодня</span></div></div>`:""}
+   ${pr?`<div class="kv">${["5","10","21","42"].map(k=>`<div><b style="font-size:15px">${pr[k]?tfmt(pr[k]):"-"}</b><span>${DL[k]}</span></div>`).join("")}</div>`:""}
+   <a class="ghost" href="${FORM_URL}" target="_blank" rel="noopener">Заполнить анкету участника</a>
+   <button class="ghost" id="setme">${norm(me)==norm(r.name)?"Это я ✓":"Это я: подсвечивать мою строку"}</button>`;
+  $("setme").onclick=()=>{me=r.name;try{localStorage.setItem("beg_me",me)}catch(e){}race();prRender();$("setme").textContent="Это я ✓"};
+  $("dlg").showModal();
+}
+$("dclose").onclick=()=>$("dlg").close();
+$("dlg").addEventListener("click",e=>{if(e.target.id=="dlg")$("dlg").close()});
+
+/* ---------- личники ---------- */
+const DL={"5":"5 км","10":"10 км","21":"21,1 км","42":"42,2 км"}, DK={"5":5,"10":10,"21":21.0975,"42":42.195};
+let PR=PR_SNAP, dist="5", gsel="all";
+const tfmt=s=>{const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=Math.round(s%60);return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0")};
+const pace=(s,k)=>{const p=Math.round(s/DK[k]);return Math.floor(p/60)+":"+String(p%60).padStart(2,"0")};
+function findPR(name,alt){
+  const byKey=PR.find(p=>p.key&&norm(p.key)==norm(name));
+  if(byKey)return byKey;
+  const one=nm=>{
+    const k=norm(nm).split(" ").filter(Boolean);
+    const toks=p=>norm(p.n).split(" ").filter(Boolean);
+    if(!k.length)return null;
+    if(k.length>=2){ // есть фамилия: совпасть должна она
+      const sur=k.slice(1);
+      return PR.find(p=>toks(p).some(w=>sur.includes(w)&&w.length>1&&!/^[а-яa-z]\.?$/.test(w)))||null;
+    }
+    const c=PR.filter(p=>toks(p)[0]==k[0]||toks(p).includes(k[0]));
+    return c.length==1?c[0]:null; // по одному имени только если такой человек один
+  };
+  return one(name)||(alt&&alt!=name?one(alt):null);
+}
+function isMe(p){if(!me)return false;const r=DATA.runners.find(x=>norm(x.name)==norm(me));
+  if(p.key&&r)return norm(p.key)==norm(r.name);
+  return norm(p.n)==norm(me)||(r&&norm(p.n)==norm(dn(r)));}
+function prRender(){
+  let L=PR.filter(p=>p[dist]&&(gsel=="all"||p.g==gsel)).sort((a,b)=>a[dist]-b[dist]);
+  const q=norm($("q2").value);
+  const pod=L.slice(0,3);
+  $("podium").innerHTML=pod.map((p,i)=>`<div class="pd"><span class="place">${i+1}</span><b>${esc(p.n)}</b><div class="t">${tfmt(p[dist])}</div><small>темп ${pace(p[dist],dist)} /км</small></div>`).join("");
+  const rows=L.map((p,i)=>({...p,rk:i+1})).filter(p=>!q||norm(p.n).includes(q));
+  $("prtbl").innerHTML=`<thead><tr><th>#</th><th>Участник</th><th class="r">Время</th><th class="r">Темп /км</th><th class="r">Отставание</th></tr></thead><tbody>${rows.map(p=>`<tr class="${isMe(p)?"me":""}"><td class="rk">${p.rk}</td><td class="n">${esc(p.n)}</td><td class="r">${tfmt(p[dist])}</td><td class="r">${pace(p[dist],dist)}</td><td class="r">${p.rk==1?"лидер":"+"+tfmt(p[dist]-L[0][dist])}</td></tr>`).join("")}</tbody>`;
+  const miss=PR.filter(p=>!p[dist]).length;
+  $("prnote").textContent=`В рейтинге ${L.length} ${plural(L.length,"участник","участника","участников")} на ${DL[dist]}. Ещё ${miss} не бегали эту дистанцию или не указали время. Список собран в чате клуба эстафетой 13 июля; новый личник пишите Максу, он обновит таблицу.`;
+}
+
+/* ---------- управление ---------- */
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x==t));["race","pr","rules","shop"].forEach(p=>$("p-"+p).hidden=p!=t.dataset.p);try{localStorage.setItem("beg_tab",t.dataset.p)}catch(e){}});
+function group(id,attr,cb){document.querySelectorAll("#"+id+" .chip").forEach(c=>c.onclick=()=>{document.querySelectorAll("#"+id+" .chip").forEach(x=>x.setAttribute("aria-pressed",x==c));cb(c.dataset[attr])})}
+group("fchips","f",v=>{filter=v;race()});
+group("dchips","d",v=>{dist=v;prRender()});
+group("gchips","g",v=>{gsel=v;prRender()});
+$("q").oninput=e=>{query=e.target.value;race()};
+$("q2").oninput=prRender;
+$("sortbtn").onclick=()=>{sortMode=sortMode=="km"?"pct":"km";$("sortbtn").textContent="Порядок: "+(sortMode=="km"?"по км":"по % цели");race()};
+$("grid").addEventListener("click",e=>{const b=e.target.closest(".lane");if(b&&!document.body.classList.contains("poster"))openCard(b.dataset.n)});
+const showPoster=()=>{document.body.classList.add("poster");$("pstamp").textContent="THE BEG · сезон 78 · данные на "+(live?new Date().toLocaleDateString("ru-RU"):SNAP_DATE);window.scrollTo(0,0)};
+if(location.search.includes("poster"))setTimeout(showPoster,1200);
+$("exitposter").onclick=()=>document.body.classList.remove("poster");
+try{const t=localStorage.getItem("beg_tab");if(t)document.querySelector(`.tab[data-p="${t}"]`)?.click()}catch(e){}
+
+function bdays(){const M=["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+  const now=new Date(),day=now.getDate();const box=$("bdays");if(!box)return;
+  const all=DATA.runners.filter(r=>r.bd);
+  const inMonth=m=>all.filter(r=>parseInt(r.bd.split(".")[1],10)==m).sort((a,b)=>parseInt(a.bd)-parseInt(b.bd));
+  let mo=now.getMonth()+1,L=inMonth(mo),soon=false;
+  for(let i=1;i<12&&!L.length;i++){mo=(now.getMonth()+1+i-1)%12+1;L=inMonth(mo);soon=true}
+  if(!L.length){box.hidden=true;return}
+  box.hidden=false;
+  box.innerHTML=`<b>🎂 ${soon?"Ближайшие дни рождения":"Дни рождения"} · ${M[mo-1]}</b>`+L.map(r=>{const d2=r.bd.split(".").map(x=>x.padStart(2,"0")).join("."),cl="bd"+(!soon&&parseInt(r.bd)==day?" today":"");
+    return r.tg?`<a class="${cl}" href="https://t.me/${r.tg}" target="_blank" rel="noopener">${r.smile||""} ${esc(dn(r))} · ${d2}</a>`:`<span class="${cl}">${r.smile||""} ${esc(dn(r))} · ${d2}</span>`}).join("")+`<span class="bdnote">даты из анкеты, заполни свою</span>`;
+}
+function renderAll(){setSource();stats();race();prRender();bdays();$("strongN").textContent=DATA.runners.filter(r=>r.role=="strong").length}
+renderAll();
+
+/* живые данные: если страница открыта там, где сеть разрешена, берём таблицу Макса напрямую */
+(async()=>{
+  try{
+    const ctl=new AbortController();setTimeout(()=>ctl.abort(),6000);
+    const res=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${SHEET_GID}&t=${Date.now()}`,{signal:ctl.signal});
+    if(!res.ok)throw 0; const txt=await res.text(); const d=buildRunners(txt);
+    const head=parseCSV(txt)[0]||[];
+    const okHead=norm(head[0]||"").includes("фио")&&d.weekLabels.length>0;
+    if(okHead&&d.runners.length>10){DATA=d;live=true;loadedAt=new Date();renderAll()}
+  }catch(e){}
+  const OUR="1p5it6qrGCk-S9OE9j6r4sDdmFW_-L7NcyEC8-itWM9Q";
+  const sheetCSV=async name=>{const r=await fetch(`https://docs.google.com/spreadsheets/d/${OUR}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(name)}&t=${Date.now()}`);if(!r.ok)throw 0;return parseCSV(await r.text())};
+  try{
+    const rows=await sheetCSV("Участники");
+    if(norm(rows[0][0]).startsWith("имя")){
+      const map={};rows.slice(1).forEach(r=>{if(r[0])map[norm(r[0])]=r});
+      DATA.runners.forEach(x=>{const r=map[norm(x.name)];if(!r)return;
+        if(r[1])x.g=/^ж/i.test(r[1])?"Ж":"М";
+        const s=norm(r[2]);if(s.startsWith("сил"))x.role="strong";else if(s.startsWith("меш"))x.role="bag";else if(s)x.role="game";
+        x.newbie=/^да/i.test(r[3]||"");const sm=(r[4]||"").trim();if(sm&&[...sm].length<=2&&!/[<>&"]/.test(sm))x.smile=sm;
+        const sv=String(r[7]||"").trim();if(/^\d+\+?$/.test(sv))x.streak={n:parseInt(sv),plus:sv.endsWith("+")};
+        if(r[8]&&r[8].trim())x.show=r[8].trim();
+        const ph=String(r[9]||"").trim();if(/^img\/ava\/\d+\.jpg$/.test(ph))x.photo=ph;
+        
+        const bd=String(r[11]||"").trim();if(/^\d{1,2}\.\d{1,2}$/.test(bd))x.bd=bd;
+        const un=String(r[12]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_]{4,32}$/.test(un))x.tg=un;
+        const ig=String(r[13]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_.]{2,30}$/.test(ig))x.ig=ig});
+      renderAll();
+    }
+  }catch(e){}
+  try{
+    const rows=await sheetCSV("Личники (ввод)");
+    const h=rows[0].map(norm);
+    if(h[0]=="имя"&&h[2]=="5 км"){
+      const ts=v=>{if(!v)return null;const p=String(v).trim().split(":").map(Number);if(p.some(isNaN)||p.length<2)return null;return p.length==3?p[0]*3600+p[1]*60+p[2]:p[0]*60+p[1]};
+      const list=rows.slice(1).filter(r=>r[0]&&r[0].trim()).map(r=>({n:r[0].trim(),key:(r[6]||"").trim(),g:/^ж/i.test(r[1]||"")?"Ж":"М",5:ts(r[2]),10:ts(r[3]),21:ts(r[4]),42:ts(r[5])}));
+      if(list.length>5){PR=list;prRender()}
+    }
+  }catch(e){}
+})();
+</script>
+</body></html>
