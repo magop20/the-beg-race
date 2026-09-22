@@ -523,7 +523,7 @@ renderAll();
   try{
     const rows=await sheetCSV("Личники (ввод)");
     const h=rows[0].map(norm);
-    if(h[0]=="имя"&&h[2]=="5 км"){
+    if(h[0]=="имя"&&(h[2]||"").startsWith("5 км")){
       const ts=v=>{if(!v)return null;const p=String(v).trim().split(":").map(Number);if(p.some(isNaN)||p.length<2)return null;return p.length==3?p[0]*3600+p[1]*60+p[2]:p[0]*60+p[1]};
       const list=rows.slice(1).filter(r=>r[0]&&r[0].trim()).map(r=>({n:r[0].trim(),key:(r[6]||"").trim(),g:/^ж/i.test(r[1]||"")?"Ж":"М",5:ts(r[2]),10:ts(r[3]),21:ts(r[4]),42:ts(r[5])}));
       if(list.length>5){PR=list;prRender()}
