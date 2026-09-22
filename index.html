@@ -5,7 +5,7 @@
 <style>
 :root{
   --ground:#F2F6EF; --surface:#FFFFFF; --surface2:#EEF3EA; --line:#DCE3D6;
-  --text:#17191C; --muted:#5E6A5B; --dim:#74806F; --ink:#0B0C0E;
+  --text:#17191C; --muted:#5E6A5B; --dim:#6F7A6B; --ink:#0B0C0E;
   --gold:#965D0C; --pink:#E0479B; --pink-ink:#C93A7C;
   --s1:8px; --s2:16px; --s3:24px; --s4:40px;
   --acid:#78FE3F; --green:#25800B; --acid-ink:#0B0C0E; --acid-soft:rgba(120,254,63,.28);
@@ -157,7 +157,7 @@ button,input{font:inherit;color:inherit}
 .bdays b{font-family:var(--display);font-weight:400;font-size:15px;margin-right:4px}
 .bd{background:var(--surface2);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--text);text-decoration:none;display:inline-block}
 a.bd:hover{background:var(--acid)}
-.bdnote{color:var(--dim);font-size:12px}
+.bdnote{color:var(--muted);font-size:12px}
 .bd.today{background:var(--acid);color:var(--acid-ink)}
 .dphotow{flex:none;margin-right:12px;line-height:0;border-radius:50%;display:block}
 .dphotow:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:50%}
@@ -179,7 +179,7 @@ a.bd:hover{background:var(--acid)}
 .promo{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);padding:14px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 .promo code{font-family:var(--display);font-size:17px;background:#000;color:var(--acid);padding:4px 8px;border-radius:4px;user-select:all}
 .promo span{color:var(--muted);font-size:14px;flex:1 1 200px}
-#p-shop a{color:var(--green);font-weight:700}
+#p-shop a{color:var(--green);font-weight:700;padding-block:6px;display:inline-block}
 @media(max-width:640px){
   .stats{grid-template-columns:1fr 1fr;gap:6px}
   .stat{padding:10px 12px;display:grid;grid-template-rows:30px auto auto}
