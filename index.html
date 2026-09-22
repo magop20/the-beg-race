@@ -163,7 +163,7 @@ a.bd:hover{background:var(--acid)}
 .dphotow{flex:none;margin-right:12px;line-height:0;border-radius:50%;display:block}
 .dphotow:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:50%}
 .dphoto{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--acid);display:block}
-.tglink{color:inherit;text-decoration:none}
+.tglink{color:inherit;text-decoration:none;outline-offset:3px}
 .tglink:hover{color:var(--green)}
 .soclist{display:flex;gap:6px;margin-left:auto;margin-right:6px}
 .soc:focus-visible{outline:2px solid var(--acid);outline-offset:2px;border-radius:50%}
@@ -220,8 +220,8 @@ dialog::backdrop{background:rgba(9,12,9,.58)}
 .dh{padding:18px 18px 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}.dh>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
 .dh h2{line-height:1.12;font-size:clamp(16px,4.6vw,24px);overflow-wrap:break-word;word-break:normal;hyphens:none}
 .dh h2{margin:0;font-family:var(--display);font-weight:400;font-size:24px;line-height:1.1}
-.dx{background:none;border:0;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%}
-.dx:hover{background:var(--surface2);color:var(--text)}
+.dx{background:none;border:0;font-size:24px;cursor:pointer;color:var(--dim);line-height:1;width:44px;height:44px;display:flex;align-items:center;justify-content:center;align-self:start}
+.dx:hover{color:var(--text)}
 .db{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px}
 .kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .kv div{background:var(--surface2);border-radius:8px;padding:9px}
@@ -245,7 +245,7 @@ body.poster .posterbar{display:flex}
   #dlg .dh h2{font-size:clamp(16px,4.6vw,22px)}
   #dlg .dphotow{grid-row:1;margin-right:0}
   #dlg .dh>div:not(.soclist){grid-row:1}
-  #dlg .dx{grid-row:1}
+  #dlg .dx{grid-row:1;align-self:center}
   #dlg .dh>.soclist{grid-column:1/-1;grid-row:2;margin:6px 0 0;flex-direction:row;margin-left:0}
 }
 </style>
