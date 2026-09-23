@@ -173,7 +173,7 @@ a.bd:hover{background:var(--acid)}
 .soclist{display:flex;gap:6px;margin-left:auto;margin-right:6px}
 .soc:focus-visible{outline:2px solid var(--acid);outline-offset:2px;border-radius:50%}
 .soc{width:34px;height:34px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;text-decoration:none}
-.soc.tg{color:#2AABEE}.soc.ig{color:#C13584}
+.soc.tg{color:#2AABEE}.soc.ig{color:#C13584}.soc.rr{color:#E4572E}
 .soc:hover{background:var(--acid);color:var(--acid-ink)}
 .shoph{font-family:var(--display);font-weight:400;font-size:20px;margin:6px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:10px}
@@ -475,7 +475,8 @@ function openCard(id){
   const link=r.tg?`https://t.me/${r.tg}`:"";
   $("dname").innerHTML=link?`<a class="tglink" href="${link}" target="_blank" rel="noopener">${esc(dn(r))}</a>`:esc(dn(r));
   $("dsoc").innerHTML=[r.tg?`<a class="soc tg" href="https://t.me/${r.tg}" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M21.9 4.3 18.8 19c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L7 11.3l-4.9-1.5c-1-.3-1-1 .2-1.5l19.1-7.4c.9-.3 1.7.2 1.4 1.4z"/></svg></a>`:"",
-                      r.ig?`<a class="soc ig" href="https://instagram.com/${r.ig}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>`:""].join("");
+                      r.ig?`<a class="soc ig" href="https://instagram.com/${r.ig}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>`:"",
+                      r.rr?`<a class="soc rr" href="https://russiarunning.com/Profile/${r.rr}" target="_blank" rel="noopener" title="Профиль RussiaRunning" aria-label="RussiaRunning"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 16l2-8 3 4 2-3"/></svg></a>`:""].join("");
   const dp=$("dphoto"),dpw=$("dphotow");
   if(r.photo){dp.src=r.photo;dp.alt=dn(r);dpw.hidden=false;dpw.href=link||"#";dpw.style.pointerEvents=link?"auto":"none"}else dpw.hidden=true; $("dtag").innerHTML=tagOf(r);
   const left=Math.max(0,r.need-r.total), d=daysLeft(), perDay=d?left/d:left;
@@ -597,7 +598,8 @@ renderAll();
         const cl=parseInt(r[14]||"",10);if(cl>0)x.closed=cl;
         const fl=String(r[10]||"").trim();if(/^https:\/\/docs\.google\.com\/forms\//.test(fl))x.form=fl;
         const un=String(r[12]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_]{4,32}$/.test(un))x.tg=un;
-        const ig=String(r[13]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_.]{2,30}$/.test(ig))x.ig=ig});
+        const ig=String(r[13]||"").trim().replace(/^@/,"");if(/^[A-Za-z0-9_.]{2,30}$/.test(ig))x.ig=ig;
+        const rr=String(r[17]||"").trim();if(/^[A-Za-z0-9_.\-]{3,40}$/.test(rr))x.rr=rr});
       renderAll();
     }
   }catch(e){}
