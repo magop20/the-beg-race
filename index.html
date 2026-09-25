@@ -223,9 +223,10 @@ a.bd:hover{background:var(--acid)}
 /* карточка участника */
 dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.25);border-radius:14px;padding:0;width:min(440px,calc(100% - 32px))}
 dialog::backdrop{background:rgba(9,12,9,.58)}
-.dh{padding:18px 18px 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}.dh>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.dh h2{line-height:1.12;font-size:clamp(16px,4.6vw,24px);overflow-wrap:break-word;word-break:normal;hyphens:none}
-.dh h2{margin:0;font-family:var(--display);font-weight:400;font-size:24px;line-height:1.1}
+.dh{padding:18px 18px 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.dh>div:not(.soclist){flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.dh>.soclist{flex:0 0 auto;flex-direction:row}
+.dh h2{margin:0;font-family:var(--display);font-weight:400;line-height:1.12;font-size:clamp(17px,2.2vw,24px);overflow-wrap:break-word;word-break:normal;hyphens:none}
 .dx{background:none;border:0;font-size:24px;cursor:pointer;color:var(--dim);line-height:1;width:44px;height:44px;display:flex;align-items:center;justify-content:center;align-self:start}
 .dx:hover{color:var(--text)}
 .db{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px}
