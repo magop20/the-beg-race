@@ -157,6 +157,7 @@ button,input{font:inherit;color:inherit}
 .rule{background:none;border-radius:0;padding:var(--s3) 0;border-top:1px solid var(--line);counter-increment:r}
 .rule h3{display:flex;gap:10px;align-items:baseline}
 .rule h3::before{content:counter(r,decimal-leading-zero);font-size:13px;color:var(--green);letter-spacing:0;font-family:var(--display)}
+.db .hist{font-size:12.5px;line-height:1.45;color:var(--muted,#8a8f98);margin:2px 2px 12px}
 .db .ghost{display:block;text-align:center;text-decoration:none;margin-bottom:8px;padding:12px;border-width:2px}
 .db #setme{background:var(--acid);border-color:var(--acid);color:var(--acid-ink);font-weight:800}
 .bdays{min-height:44px;background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -512,6 +513,7 @@ function openCard(id){
    <div class="weeks">${r.weeks.map((w,i)=>`<div class="wk"><b>${w?fmt(w):"0"}</b><i style="height:${w/mx*60}px"></i><span>${esc(DATA.weekLabels[i]||"")}</span></div>`).join("")}</div>
    ${r.pay!=null?`<div class="kv"><div style="grid-column:1/-1"><b>${fmt(r.pay,0)} ₽</b><span>накоплено в банке на сегодня</span></div></div>`:""}
    ${pr&&["5","10","21","42"].some(k=>pr[k])?`<div class="kv">${["5","10","21","42"].map(k=>`<div><b style="font-size:15px">${pr[k]?tfmt(pr[k]):"-"}</b><span>${DL[k]}</span></div>`).join("")}</div>`:""}
+   ${r.withUs?`<div class="hist">В клубе ${r.withUs} ${plural(r.withUs,"челлендж","челленджа","челленджей")}${r.firstCh?`, первый ${esc(r.firstCh)}`:""}${r.streak&&r.streak.n>1?` · подряд ${r.streak.n}`:""}${r.closed?` · закрыто ${r.closed}`:""}</div>`:""}
    <a class="ghost" href="${esc(r.form||FORM_URL)}" target="_blank" rel="noopener">${r.form?"Заполнить анкету: твои данные уже вписаны":"Заполнить анкету участника"}</a>
    <button class="ghost" id="setme">${me==(r.id||r.name)?"Это я ✓":"Это я, подсветить мою строку"}</button>`;
   $("setme").onclick=()=>{me=r.id||r.name;try{localStorage.setItem("beg_me",me)}catch(e){}race();prRender();$("dlg").close();
@@ -622,6 +624,7 @@ renderAll();
         const s=norm(r[2]);if(s.startsWith("сил"))x.role="strong";else if(s.startsWith("меш"))x.role="bag";else if(s)x.role="game";
         x.newbie=/^да/i.test(r[3]||"");const sm=(r[4]||"").trim();if(sm&&[...sm].length<=2&&!/[<>&"]/.test(sm))x.smile=sm;
         const sv=String(r[7]||"").trim();if(/^\d+\+?$/.test(sv))x.streak={n:parseInt(sv),plus:sv.endsWith("+")};
+        const wu=parseInt(r[18]||"",10);if(wu>0)x.withUs=wu; const fc=String(r[19]||"").trim();if(/^\d+-й, [а-я]+ \d{4}$/.test(fc))x.firstCh=fc;
         if(r[8]&&r[8].trim())x.show=r[8].trim();
         const ph=String(r[9]||"").trim();if(/^img\/ava\/[a-z0-9]+\.jpg$/i.test(ph))x.photo=ph;
         
