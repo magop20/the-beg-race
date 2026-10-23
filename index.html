@@ -134,6 +134,7 @@ button,input{font:inherit;color:inherit}
 .tlane.me{border-color:var(--green)}
 .tlane .who small{display:block;color:var(--muted);font-size:12px;font-weight:600}
 .tlane .ava{font-size:26px}
+.fl{display:inline-block;transform:scaleX(-1)}
 .tlane .num.gap{color:var(--muted);font-size:13px}
 .tlane.lead .num.gap{color:var(--green);font-family:var(--display);font-weight:400}
 .tcut{display:flex;align-items:center;gap:8px;margin:4px 8px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
@@ -306,7 +307,7 @@ body.poster .posterbar{display:flex}
     <div class="posterbar"><span id="pstamp"></span><button class="ghost" id="exitposter">Вернуть панель</button></div>
     <div class="bdays" id="bdays" hidden></div>
     <div class="stats" id="stats"></div>
-    <div class="teams" id="teams" hidden><div class="thead"><b>Командная гонка</b><span>сумма км всех участников команды за сезон, в следующий раунд проходят первые 4</span></div><div id="tgrid"></div></div>
+    <div class="teams" id="teams" hidden><div class="thead"><b>Командная гонка</b><span id="tsub"></span></div><div id="tgrid"></div></div>
     <div class="bar">
       <span class="qw"><input class="search" id="q" type="search" placeholder="Найди себя: начни вводить имя" autocomplete="off"><button class="qx" id="qx" type="button" aria-label="Очистить поиск" hidden>×</button></span>
       <div class="chips" id="fchips">
@@ -511,7 +512,7 @@ function race(){
       <span class="track" aria-label="${fmt(r.total)} из ${r.need} км">
         <span class="fill" style="width:${pc}%;background:${r.color}"></span>
         ${done?"":`<span class="trail" style="left:${pc}%"></span>`}
-        <span class="ava" style="left:${Math.min(94,Math.max(4,p*100)).toFixed(1)}%">${done?'<span class="crown">👑</span>':""}${esc(r.smile||"")}</span>
+        <span class="ava" style="left:${Math.min(94,Math.max(4,p*100)).toFixed(1)}%">${done?'<span class="crown">👑</span>':""}${runE(r.smile)}</span>
         <span class="post"></span></span>
       <span class="num km">${fmt(r.total,0)} км</span>
       <span class="num left">${done?"ГОТОВО!":fmt(left,2)+" км"}</span>
@@ -614,24 +615,31 @@ function bdays(){const M=["январь","февраль","март","апрел
     return r.tg?`<a class="${cl}" href="https://t.me/${r.tg}" target="_blank" rel="noopener">${r.smile||""} ${esc(dn(r))} · ${d2}</a>`:`<span class="${cl}">${r.smile||""} ${esc(dn(r))} · ${d2}</span>`}).join("")+`<span class="bdnote">даты берём из анкеты, заполни свою</span>`;
 }
 if(seasonFrom(DATA.weekLabels))seasonTitle();
+const FLIP=new Set([..."🦔🐢🦆🐧🐝🦄🦈🐺🦘🐬🦩🐿🦒🦦🦬🐗🦌🦫🦡🐆🐅🦓🦏🐊🦜🐳🐋🐠🐟🦭🐫🐪🦙🐐🐑🦃🦢🐍🦖🦕🐔🐦🐤🦅🐴🐛🐜🦗🦂🦟🏃🐎🐕🐈🐁🐀🐇🐓"]);   // в шрифте Apple эти звери в профиль смотрят влево, а бежим мы вправо
+const runE=e=>{const k=[...String(e||"")].filter(c=>c!="\uFE0F")[0];return FLIP.has(k)?`<span class="fl">${esc(e)}</span>`:esc(e||"")};
 const TCOL=["#E8478F","#2E7FD4","#E07B2A","#3A9E4D","#8B4FD8","#D4A017"];
 let TEAMS=null, openTeam=null;
+function weekStart(l){const a=String(l||"").toLowerCase().match(/^(\d{1,2})\s*-\s*(\d{1,2})\s*([а-я]{3})/);if(!a||!(a[3] in MON))return null;
+  let m=MON[a[3]];if(+a[1]>+a[2])m--;const y=(TEAMS&&TEAMS.from?TEAMS.from:new Date()).getFullYear();return new Date(y,m,+a[1])}
+function teamKm(r){if(!TEAMS||!TEAMS.from)return r.total||0;   // км задания: недели Макса, которые начинаются внутри окна задания
+  return DATA.weekLabels.reduce((a,l,i)=>{const d=weekStart(l);return a+(d&&d>=TEAMS.from&&d<=TEAMS.to?(r.weeks[i]||0):0)},0)}
 function teamTotals(){if(!TEAMS)return [];const by={};
   TEAMS.list.forEach(t=>by[t.n]={...t,m:[],km:0});
-  DATA.runners.forEach(r=>{const t=by[TEAMS.of[norm(r.name)]];if(t){t.m.push(r);t.km+=r.total||0}});
-  return Object.values(by).filter(t=>t.m.length).sort((a,b)=>b.km-a.km)}
+  DATA.runners.forEach(r=>{const t=by[TEAMS.of[norm(r.name)]];if(t){r.tkm=teamKm(r);t.m.push(r);t.km+=r.tkm}});
+  return Object.values(by).filter(t=>t.m.length).sort((a,b)=>b.km-a.km||a.n-b.n)}
 function teams(){const box=$("teams"),L=teamTotals();if(!L.length){box.hidden=true;return}box.hidden=false;
-  const top=L[0].km||1;
+  const top=L[0].km||1, wait=TEAMS.from&&Date.now()<TEAMS.from, dd=d=>d.getDate()+" "+MON_G[d.getMonth()];
+  $("tsub").textContent=TEAMS.from?`${TEAMS.task||"Задание"}: км с ${dd(TEAMS.from)} по ${dd(TEAMS.to)}. Места дают баллы: 1-е 6, 2-е 5, 3-е 3.${wait?` Старт ${dd(TEAMS.from)}, до него у всех 0.`:""}`:"сумма км участников команды";
   $("tgrid").innerHTML=L.map((t,i)=>{const p=t.km/top, mine=me&&t.m.some(r=>(r.id||r.name)==me), op=openTeam==t.n;
-    const row=`<button class="tlane${i==0?" lead":""}${mine?" me":""}${op?" open":""}" data-t="${t.n}" aria-expanded="${op}">
-      <span class="pos">${i<3?["🥇","🥈","🥉"][i]:i+1}</span>
+    const row=`<button class="tlane${i==0&&!wait&&t.km?" lead":""}${mine?" me":""}${op?" open":""}" data-t="${t.n}" aria-expanded="${op}">
+      <span class="pos">${wait?"":(i<3?["🥇","🥈","🥉"][i]:i+1)}</span>
       <span class="who"><b>${esc(t.name)}</b><small>команда ${t.n} · ${t.m.length} ${plural(t.m.length,"человек","человека","человек")} · ${fmt(t.km/t.m.length,1)} км на человека</small></span>
-      <span class="track" aria-label="${fmt(t.km,0)} км"><span class="fill" style="width:${(p*100).toFixed(1)}%;background:${TCOL[(t.n-1)%TCOL.length]}"></span>
-        <span class="ava" style="left:${Math.min(94,Math.max(4,p*100)).toFixed(1)}%">${esc(t.icon||"🏃")}</span></span>
+      <span class="track" aria-label="${fmt(t.km,0)} км">${t.km>0?`<span class="fill" style="width:${(p*100).toFixed(1)}%;background:${TCOL[(t.n-1)%TCOL.length]}"></span>`:""}
+        <span class="ava" style="left:${Math.min(94,Math.max(4,p*100)).toFixed(1)}%">${runE(t.icon||"🏃")}</span></span>
       <span class="num km">${fmt(t.km,0)} км</span>
-      <span class="num gap">${i==0?"ЛИДЕР":"−"+fmt(top-t.km,1)+" км"}</span></button>`;
-    const mem=op?`<div class="tmem">${t.m.slice().sort((a,b)=>b.total-a.total).map(r=>`<button class="tm${r.total>0?"":" zero"}${me&&(r.id||r.name)==me?" me":""}" data-n="${esc(r.id||r.name)}">${esc(r.smile||"")} ${esc(dn(r))}<b>${fmt(r.total,1)}</b></button>`).join("")}</div>`:"";
-    return row+mem+(i==3&&L.length>4?'<div class="tcut">выше черты проходят в следующий раунд</div>':"")}).join("")}
+      <span class="num gap">${wait||!t.km?"":(i==0?"ЛИДЕР":"−"+fmt(top-t.km,1)+" км")}</span></button>`;
+    const mem=op?`<div class="tmem">${t.m.slice().sort((a,b)=>b.total-a.total).map(r=>`<button class="tm${r.tkm>0?"":" zero"}${me&&(r.id||r.name)==me?" me":""}" data-n="${esc(r.id||r.name)}">${esc(r.smile||"")} ${esc(dn(r))}<b>${fmt(r.tkm,1)}</b></button>`).join("")}</div>`:"";
+    return row+mem}).join("")}
 $("tgrid").addEventListener("click",e=>{const m=e.target.closest(".tm");if(m){openCard(m.dataset.n);return}
   const b=e.target.closest(".tlane");if(b){const n=+b.dataset.t;openTeam=openTeam==n?null:n;teams()}});
 function renderAll(){setSource();stats();teams();race();prRender();bdays();$("strongN").textContent=DATA.runners.filter(r=>r.role=="strong").length}
@@ -667,7 +675,9 @@ renderAll();
     if(norm(rows[0][0]).startsWith("участник")){const of={},list=[];
       rows.slice(1).forEach(r=>{const n=parseInt(r[1],10);if(r[0]&&n>0)of[norm(r[0])]=n;
         const tn=parseInt(r[4],10),nm=String(r[5]||"").trim();if(tn>0&&nm){const ic=String(r[10]||"").trim();list.push({n:tn,name:nm,icon:[...ic].length<=3?ic:""})}});
-      if(list.length){TEAMS={list,of};teams()}}
+      const dt=x=>{const m=String(x||"").match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})/);return m?new Date(+m[3],m[2]-1,+m[1]):null};
+      const from=dt((rows[1]||[])[12]),to=dt((rows[1]||[])[13]);if(to)to.setHours(23,59);
+      if(list.length){TEAMS={list,of,task:String((rows[1]||[])[11]||"").replace(/^\d+\.\s*/,"").trim()?("Задание "+String((rows[1]||[])[11]).trim().replace(/^(\d+)\.\s*/,"$1, ").replace(/^Задание /,"")).replace(/^Задание (\d+), .*$/,"Задание $1"):"",from:from&&to?from:null,to:from&&to?to:null};teams()}}
   }catch(e){}
   try{
     const rows=await sheetCSV("Участники");
