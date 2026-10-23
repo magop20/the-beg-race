@@ -124,6 +124,32 @@ button,input{font:inherit;color:inherit}
   .pos{grid-area:p;align-self:start;padding-top:2px}.who{grid-area:w}.track{grid-area:t}.num.km{grid-area:k}.num.left{grid-area:l}.num.pct{display:none}
   .sign{display:none}.boardtitle{right:20px}.scene{height:150px}
 }
+/* командная гонка */
+.teams{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 10px 8px;margin:0 0 14px}
+.thead{display:flex;gap:6px 12px;align-items:baseline;flex-wrap:wrap;margin:2px 8px 8px}
+.thead b{font-family:var(--display);font-weight:400;font-size:22px;color:var(--ink);line-height:1.1}
+.thead span{color:var(--muted);font-size:13px}
+.tlane{display:grid;grid-template-columns:28px minmax(150px,1.4fr) minmax(140px,2.2fr) 84px 96px;gap:10px;align-items:center;padding:8px;border-radius:10px;cursor:pointer;border:1px solid transparent;background:none;width:100%;text-align:left;color:var(--text);font:inherit}
+.tlane:hover,.tlane.open{background:var(--acid-soft)}
+.tlane.me{border-color:var(--green)}
+.tlane .who small{display:block;color:var(--muted);font-size:12px;font-weight:600}
+.tlane .ava{font-size:26px}
+.tlane .num.gap{color:var(--muted);font-size:13px}
+.tlane.lead .num.gap{color:var(--green);font-family:var(--display);font-weight:400}
+.tcut{display:flex;align-items:center;gap:8px;margin:4px 8px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tcut::before,.tcut::after{content:"";flex:1;border-top:2px dashed var(--line)}
+.tmem{display:flex;flex-wrap:wrap;gap:6px;padding:2px 8px 12px 46px}
+.tm{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 10px;font-size:13px;cursor:pointer;color:var(--text);font:inherit;font-size:13px}
+.tm:hover{border-color:var(--dim)}
+.tm b{font-variant-numeric:tabular-nums;margin-left:4px}
+.tm.zero{color:var(--dim)}
+.tm.me{border-color:var(--green);background:var(--acid-soft)}
+@media (max-width:640px){
+  .tlane{grid-template-columns:24px 1fr 74px;grid-template-areas:"p w k" "p t t";row-gap:2px}
+  .tlane .pos{grid-area:p;align-self:start;padding-top:2px}.tlane .who{grid-area:w}.tlane .track{grid-area:t}.tlane .num.km{grid-area:k}.tlane .num.gap{display:none}
+  .tmem{padding-left:8px}
+  .tlane .who b{white-space:normal;line-height:1.15}
+}
 /* личники */
 .prhead{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
 .podium{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
@@ -280,6 +306,7 @@ body.poster .posterbar{display:flex}
     <div class="posterbar"><span id="pstamp"></span><button class="ghost" id="exitposter">Вернуть панель</button></div>
     <div class="bdays" id="bdays" hidden></div>
     <div class="stats" id="stats"></div>
+    <div class="teams" id="teams" hidden><div class="thead"><b>Командная гонка</b><span>сумма км всех участников команды за сезон, в следующий раунд проходят первые 4</span></div><div id="tgrid"></div></div>
     <div class="bar">
       <span class="qw"><input class="search" id="q" type="search" placeholder="Найди себя: начни вводить имя" autocomplete="off"><button class="qx" id="qx" type="button" aria-label="Очистить поиск" hidden>×</button></span>
       <div class="chips" id="fchips">
@@ -587,7 +614,27 @@ function bdays(){const M=["январь","февраль","март","апрел
     return r.tg?`<a class="${cl}" href="https://t.me/${r.tg}" target="_blank" rel="noopener">${r.smile||""} ${esc(dn(r))} · ${d2}</a>`:`<span class="${cl}">${r.smile||""} ${esc(dn(r))} · ${d2}</span>`}).join("")+`<span class="bdnote">даты берём из анкеты, заполни свою</span>`;
 }
 if(seasonFrom(DATA.weekLabels))seasonTitle();
-function renderAll(){setSource();stats();race();prRender();bdays();$("strongN").textContent=DATA.runners.filter(r=>r.role=="strong").length}
+const TCOL=["#E8478F","#2E7FD4","#E07B2A","#3A9E4D","#8B4FD8","#D4A017"];
+let TEAMS=null, openTeam=null;
+function teamTotals(){if(!TEAMS)return [];const by={};
+  TEAMS.list.forEach(t=>by[t.n]={...t,m:[],km:0});
+  DATA.runners.forEach(r=>{const t=by[TEAMS.of[norm(r.name)]];if(t){t.m.push(r);t.km+=r.total||0}});
+  return Object.values(by).filter(t=>t.m.length).sort((a,b)=>b.km-a.km)}
+function teams(){const box=$("teams"),L=teamTotals();if(!L.length){box.hidden=true;return}box.hidden=false;
+  const top=L[0].km||1;
+  $("tgrid").innerHTML=L.map((t,i)=>{const p=t.km/top, mine=me&&t.m.some(r=>(r.id||r.name)==me), op=openTeam==t.n;
+    const row=`<button class="tlane${i==0?" lead":""}${mine?" me":""}${op?" open":""}" data-t="${t.n}" aria-expanded="${op}">
+      <span class="pos">${i<3?["🥇","🥈","🥉"][i]:i+1}</span>
+      <span class="who"><b>${esc(t.name)}</b><small>команда ${t.n} · ${t.m.length} ${plural(t.m.length,"человек","человека","человек")} · ${fmt(t.km/t.m.length,1)} км на человека</small></span>
+      <span class="track" aria-label="${fmt(t.km,0)} км"><span class="fill" style="width:${(p*100).toFixed(1)}%;background:${TCOL[(t.n-1)%TCOL.length]}"></span>
+        <span class="ava" style="left:${Math.min(94,Math.max(4,p*100)).toFixed(1)}%">${esc(t.icon||"🏃")}</span></span>
+      <span class="num km">${fmt(t.km,0)} км</span>
+      <span class="num gap">${i==0?"ЛИДЕР":"−"+fmt(top-t.km,1)+" км"}</span></button>`;
+    const mem=op?`<div class="tmem">${t.m.slice().sort((a,b)=>b.total-a.total).map(r=>`<button class="tm${r.total>0?"":" zero"}${me&&(r.id||r.name)==me?" me":""}" data-n="${esc(r.id||r.name)}">${esc(r.smile||"")} ${esc(dn(r))}<b>${fmt(r.total,1)}</b></button>`).join("")}</div>`:"";
+    return row+mem+(i==3&&L.length>4?'<div class="tcut">выше черты проходят в следующий раунд</div>':"")}).join("")}
+$("tgrid").addEventListener("click",e=>{const m=e.target.closest(".tm");if(m){openCard(m.dataset.n);return}
+  const b=e.target.closest(".tlane");if(b){const n=+b.dataset.t;openTeam=openTeam==n?null:n;teams()}});
+function renderAll(){setSource();stats();teams();race();prRender();bdays();$("strongN").textContent=DATA.runners.filter(r=>r.role=="strong").length}
 renderAll();
 
 /* живые данные: если страница открыта там, где сеть разрешена, берём таблицу Макса напрямую */
@@ -614,6 +661,13 @@ renderAll();
     const cell=(chk.find(r=>(r[2]||"").startsWith("Макс обновлял"))||[])[3];
     if(cell){const d2=new Date(cell.replace(" ","T"));
       if(!isNaN(d2))maxAt=d2.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"});setSource()}
+  }catch(e){}
+  try{
+    const rows=await sheetCSV("Команды");
+    if(norm(rows[0][0]).startsWith("участник")){const of={},list=[];
+      rows.slice(1).forEach(r=>{const n=parseInt(r[1],10);if(r[0]&&n>0)of[norm(r[0])]=n;
+        const tn=parseInt(r[4],10),nm=String(r[5]||"").trim();if(tn>0&&nm){const ic=String(r[10]||"").trim();list.push({n:tn,name:nm,icon:[...ic].length<=3?ic:""})}});
+      if(list.length){TEAMS={list,of};teams()}}
   }catch(e){}
   try{
     const rows=await sheetCSV("Участники");
