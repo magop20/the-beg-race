@@ -442,9 +442,10 @@ function buildRunners(csv){
   const iTot=find(/^всего/), iNeed=find(/^нужно/), iG=find(/^пол$/), iSt=find(/^статус/);
   if(!weekIdx.length||iNeed<0) throw new Error('шапка таблицы изменилась');
   const iPay=find(/получк|банк/)>=0?find(/получк|банк/):8; // столбец «получка»
-  const out=[];
+  const out=[], hidden=[];
   for(const r of rows.slice(1)){
-    const name=(r[iName]||"").trim(); if(!name||/администратор/i.test(name))continue;
+    const name=(r[iName]||"").trim(); if(!name)continue;
+    if(/администратор/i.test(name)){hidden.push({name,weeks:weekIdx.map(i=>num(r[i])||0),total:0,hidden:true});continue}   // в личной гонке не показываем, в команде считаем
     const weeks=weekIdx.map(i=>num(r[i])||0), need=num(r[iNeed]);
     const total=weekIdx.length?weeks.reduce((a,b)=>a+b,0):(num(r[iTot])||0);
     let g=iG>=0&&r[iG]?(/^ж/i.test(r[iG])?"Ж":"М"):genderGuess(name);
@@ -453,7 +454,7 @@ function buildRunners(csv){
     const role=st.startsWith("сил")||STRONG.has(k)?"strong":(st.startsWith("меш")||need===50?"bag":"game");
     out.push({id:name+'#'+out.length,name,g,weeks,total:Math.round(total*100)/100,need:need||50,pay:num(r[iPay]),role,newbie:NEWBIE.has(k)});
   }
-  return {runners:out,weekLabels:weekIdx.map(i=>rows[0][i])};
+  return {runners:out,hidden,weekLabels:weekIdx.map(i=>rows[0][i])};
 }
 
 /* ---------- состояние ---------- */
@@ -625,7 +626,7 @@ function teamKm(r){if(!TEAMS||!TEAMS.from)return r.total||0;   // км зада�
   return DATA.weekLabels.reduce((a,l,i)=>{const d=weekStart(l);return a+(d&&d>=TEAMS.from&&d<=TEAMS.to?(r.weeks[i]||0):0)},0)}
 function teamTotals(){if(!TEAMS)return [];const by={};
   TEAMS.list.forEach(t=>by[t.n]={...t,m:[],km:0});
-  DATA.runners.forEach(r=>{const t=by[TEAMS.of[norm(r.name)]];if(t){r.tkm=teamKm(r);t.m.push(r);t.km+=r.tkm}});
+  DATA.runners.concat(DATA.hidden||[]).forEach(r=>{const t=by[TEAMS.of[norm(r.name)]];if(t){r.tkm=teamKm(r);t.m.push(r);t.km+=r.tkm}});
   return Object.values(by).filter(t=>t.m.length).sort((a,b)=>b.km-a.km||a.n-b.n)}
 function teams(){const box=$("teams"),L=teamTotals();if(!L.length){box.hidden=true;return}box.hidden=false;
   const top=L[0].km||1, wait=TEAMS.from&&Date.now()<TEAMS.from, dd=d=>d.getDate()+" "+MON_G[d.getMonth()];
@@ -638,7 +639,7 @@ function teams(){const box=$("teams"),L=teamTotals();if(!L.length){box.hidden=tr
         <span class="ava" style="left:${Math.min(94,Math.max(4,p*100)).toFixed(1)}%">${runE(t.icon||"🏃")}</span></span>
       <span class="num km">${fmt(t.km,0)} км</span>
       <span class="num gap">${wait||!t.km?"":(i==0?"ЛИДЕР":"−"+fmt(top-t.km,1)+" км")}</span></button>`;
-    const mem=op?`<div class="tmem">${t.m.slice().sort((a,b)=>b.total-a.total).map(r=>`<button class="tm${r.tkm>0?"":" zero"}${me&&(r.id||r.name)==me?" me":""}" data-n="${esc(r.id||r.name)}">${esc(r.smile||"")} ${esc(dn(r))}<b>${fmt(r.tkm,1)}</b></button>`).join("")}</div>`:"";
+    const mem=op?`<div class="tmem">${t.m.slice().sort((a,b)=>b.tkm-a.tkm||b.total-a.total).map(r=>r.hidden?`<span class="tm${r.tkm>0?"":" zero"}">${esc(r.name)}<b>${fmt(r.tkm,1)}</b></span>`:`<button class="tm${r.tkm>0?"":" zero"}${me&&(r.id||r.name)==me?" me":""}" data-n="${esc(r.id||r.name)}">${esc(r.smile||"")} ${esc(dn(r))}<b>${fmt(r.tkm,1)}</b></button>`).join("")}</div>`:"";
     return row+mem}).join("")}
 $("tgrid").addEventListener("click",e=>{const m=e.target.closest(".tm");if(m){openCard(m.dataset.n);return}
   const b=e.target.closest(".tlane");if(b){const n=+b.dataset.t;openTeam=openTeam==n?null:n;teams()}});
