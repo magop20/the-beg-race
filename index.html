@@ -433,6 +433,24 @@ function seasonTitle(){
 function parseCSV(t){const rows=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==','){r.push(f);f=""}else if(c=='\n'||c=='\r'){if(c=='\r'&&t[i+1]=='\n')i++;r.push(f);rows.push(r);r=[];f=""}else f+=c}if(f!==""||r.length){r.push(f);rows.push(r)}return rows}
 const num=v=>{if(v==null)return null;const s=String(v).trim().replace(/\s/g,"").replace(",",".");if(!s)return null;const x=parseFloat(s);return isNaN(x)?null:x};
 const norm=s=>String(s||"").toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ").trim();
+// командный лист Макса («Лист5») читаем прямо отсюда, чтобы команды обновлялись без нашего ноута; разбор как в _scripts/teams_sync.py.
+// Команда кончается на строке итога («ВСЕГО» или пустое имя с числом), номер по порядку итогов: сверху вниз, затем слева направо.
+// Не 6 команд или меньше 60 человек: возвращаем null, и сайт остаётся на копии во вкладке «Команды».
+async function maxTeams(){try{
+  const c=new AbortController(),tm=setTimeout(()=>c.abort(),15000);
+  const r=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=0&sheet=${encodeURIComponent("Лист5")}&t=${Date.now()}`,{signal:c.signal});clearTimeout(tm);
+  if(!r.ok)return null;const rows=parseCSV(await r.text());if(!rows.length)return null;
+  const isNum=v=>/^-?\d+([.,]\d+)?$/.test(String(v||"").replace(/[\s ]/g,"")),kmOf=v=>isNum(v)?parseFloat(String(v).replace(/[\s ]/g,"").replace(",",".")):null;
+  const w=Math.max(...rows.map(x=>x.length)),segs=[];
+  for(let col=0;col<w-1;col++){let cur=[];
+    for(let i=0;i<=rows.length;i++){const x=rows[i]||[],nm=String(x[col]||"").replace(/\s+/g," ").trim(),km=kmOf(x[col+1]);
+      const tot=nm.toLowerCase().startsWith("всего")||(!nm&&km!==null);
+      if(nm&&!tot&&!isNum(nm)){cur.push([nm,km||0]);continue}
+      if(tot||i==rows.length){if(cur.length>=5)segs.push([i,col,cur]);cur=[]}}}
+  segs.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+  if(segs.length!=6||segs.reduce((s,x)=>s+x[2].length,0)<60)return null;
+  const out=[];segs.forEach((s,k)=>s[2].forEach(([nm,km])=>out.push([nm,k+1,Math.round(km*100)/100])));return out;
+}catch(e){return null}}
 const FEMALE=new Set(META.female.map(norm)), STRONG=new Set(META.strong.map(norm)), NEWBIE=new Set(META.newbie.map(norm));
 function genderGuess(n){const k=norm(n);if(FEMALE.has(k))return"Ж";const first=k.split(" ")[0];if(/(а|я)$/.test(first)&&!["илья","никита","кузьма","фома"].includes(first))return"Ж";if(first=="любовь")return"Ж";return"М"}
 function buildRunners(csv){
@@ -678,7 +696,8 @@ renderAll();
         const mn=parseInt(r[1],10);if(r[0]&&mn>0)trows.push([String(r[0]).trim(),mn,num(r[2])||0])});
       const dt=x=>{const m=String(x||"").match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})/);return m?new Date(+m[3],m[2]-1,+m[1]):null};
       const from=dt((rows[1]||[])[12]),to=dt((rows[1]||[])[13]);if(to)to.setHours(23,59);
-      if(list.length){TEAMS={list,of,rows:trows,task:String((rows[1]||[])[11]||"").replace(/^\d+\.\s*/,"").trim()?("Задание "+String((rows[1]||[])[11]).trim().replace(/^(\d+)\.\s*/,"$1, ").replace(/^Задание /,"")).replace(/^Задание (\d+), .*$/,"Задание $1"):"",from:from&&to?from:null,to:from&&to?to:null};teams()}}
+      if(list.length){TEAMS={list,of,rows:trows,task:String((rows[1]||[])[11]||"").replace(/^\d+\.\s*/,"").trim()?("Задание "+String((rows[1]||[])[11]).trim().replace(/^(\d+)\.\s*/,"$1, ").replace(/^Задание /,"")).replace(/^Задание (\d+), .*$/,"Задание $1"):"",from:from&&to?from:null,to:from&&to?to:null};teams();
+        const live=await maxTeams();if(live){TEAMS.rows=live;teams()}}}
   }catch(e){}
   try{
     const rows=await sheetCSV("Участники");
