@@ -446,9 +446,9 @@ async function maxTeams(){try{
     for(let i=0;i<=rows.length;i++){const x=rows[i]||[],nm=String(x[col]||"").replace(/\s+/g," ").trim(),km=kmOf(x[col+1]);
       const tot=nm.toLowerCase().startsWith("всего")||(!nm&&km!==null);
       if(nm&&!tot&&!isNum(nm)){cur.push([nm,km||0]);continue}
-      if(tot||i==rows.length){if(cur.length>=5)segs.push([i,col,cur]);cur=[]}}}
+      const sm=cur.reduce((q,x)=>q+x[1],0),real=tot&&(nm.toLowerCase().startsWith("всего")||Math.abs(km-sm)<=0.2*Math.max(sm,1));if(real&&cur.length>=5)segs.push([i,col,cur]);if(tot||i==rows.length)cur=[]}}
   segs.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
-  if(segs.length!=6||segs.reduce((s,x)=>s+x[2].length,0)<60)return null;
+  if(segs.length<2||segs.reduce((s,x)=>s+x[2].length,0)<60)return null;
   const out=[];segs.forEach((s,k)=>s[2].forEach(([nm,km])=>out.push([nm,k+1,Math.round(km*100)/100])));return out;
 }catch(e){return null}}
 const FEMALE=new Set(META.female.map(norm)), STRONG=new Set(META.strong.map(norm)), NEWBIE=new Set(META.newbie.map(norm));
