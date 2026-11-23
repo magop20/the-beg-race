@@ -449,6 +449,7 @@ async function maxTeams(){try{
       const sm=cur.reduce((q,x)=>q+x[1],0),real=tot&&(nm.toLowerCase().startsWith("всего")||Math.abs(km-sm)<=0.2*Math.max(sm,1));if(real&&cur.length>=5)segs.push([i,col,cur]);if(tot||i==rows.length)cur=[]}}
   segs.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
   if(segs.length<2||segs.reduce((s,x)=>s+x[2].length,0)<60)return null;
+  if(segs.some(x=>x[2].length>45))return null;   // 23.11: на лист легли чужие списки, в «команде» оказалось 107 человек
   const out=[];segs.forEach((s,k)=>s[2].forEach(([nm,km])=>out.push([nm,k+1,Math.round(km*100)/100])));return out;
 }catch(e){return null}}
 const FEMALE=new Set(META.female.map(norm)), STRONG=new Set(META.strong.map(norm)), NEWBIE=new Set(META.newbie.map(norm));
@@ -696,7 +697,8 @@ renderAll();
         const mn=parseInt(r[1],10);if(r[0]&&mn>0)trows.push([String(r[0]).trim(),mn,num(r[2])||0])});
       const dt=x=>{const m=String(x||"").match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})/);return m?new Date(+m[3],m[2]-1,+m[1]):null};
       const from=dt((rows[1]||[])[12]),to=dt((rows[1]||[])[13]);if(to)to.setHours(23,59);
-      if(list.length){TEAMS={list,of,rows:trows,task:String((rows[1]||[])[11]||"").replace(/^\d+\.\s*/,"").trim()?("Задание "+String((rows[1]||[])[11]).trim().replace(/^(\d+)\.\s*/,"$1, ").replace(/^Задание /,"")).replace(/^Задание (\d+), .*$/,"Задание $1"):"",from:from&&to?from:null,to:from&&to?to:null};teams();
+      const over=to&&Date.now()>to.getTime()+3*864e5;   // задание кончилось больше трёх дней назад: на листе Макса уже другой конкурс, блок прячем. Новое задание: L2:N2 вкладки «Команды»
+      if(list.length&&!over){TEAMS={list,of,rows:trows,task:String((rows[1]||[])[11]||"").replace(/^\d+\.\s*/,"").trim()?("Задание "+String((rows[1]||[])[11]).trim().replace(/^(\d+)\.\s*/,"$1, ").replace(/^Задание /,"")).replace(/^Задание (\d+), .*$/,"Задание $1"):"",from:from&&to?from:null,to:from&&to?to:null};teams();
         const live=await maxTeams();if(live){TEAMS.rows=live;teams()}}}
   }catch(e){}
   try{
