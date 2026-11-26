@@ -457,7 +457,7 @@ function genderGuess(n){const k=norm(n);if(FEMALE.has(k))return"Ж";const first=
 function buildRunners(csv){
   const rows=parseCSV(csv); const h=rows[0].map(x=>norm(x));
   const iName=0, weekIdx=[], find=re=>h.findIndex(x=>re.test(x));
-  h.forEach((x,i)=>{if(/^\d{1,2}\s*-\s*\d{1,2}\s/.test(x))weekIdx.push(i)});
+  h.forEach((x,i)=>{if(/^\d{1,2}\s*-\s*\d{1,2}\s*[а-яё]/.test(x))weekIdx.push(i)});
   const iTot=find(/^всего/), iNeed=find(/^нужно/), iG=find(/^пол$/), iSt=find(/^статус/);
   if(!weekIdx.length||iNeed<0) throw new Error('шапка таблицы изменилась');
   const iPay=find(/получк|банк/)>=0?find(/получк|банк/):8; // столбец «получка»
